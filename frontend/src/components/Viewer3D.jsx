@@ -1,3 +1,5 @@
+import { useId } from "react";
+import { useLocale } from "../i18n/LocaleProvider";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -68,6 +70,8 @@ export default function Viewer3D({
   label = "Gi Reboot® · E-TPU",
   modelUrl = "/assets/3d/gi-sole.glb",
 }) {
+  const { tr } = useLocale();
+  const instanceId = useId();
   const wrapRef = useRef(null);
   const canvasRef = useRef(null);
   const materialRef = useRef(null);
@@ -391,20 +395,18 @@ export default function Viewer3D({
   };
 
   return (
-    <div className="viewer-3d-frame" data-testid="viewer-3d-frame">
+    <div className="viewer-3d-frame" data-testid={instanceId + "-" + ("viewer-3d-frame")}>
     <div
       className="viewer-3d-container"
       ref={wrapRef}
-      data-cursor="Girar 360°"
-      data-testid="viewer-3d"
+      data-cursor={tr("Girar 360°")}
+      data-testid={instanceId + "-" + ("viewer-3d")}
     >
-      <canvas ref={canvasRef} id="gi-reboot-viewer" />
-      <span className="viewer-badge">{label}</span>
+      <canvas data-testid={`${instanceId}-viewer3-d-canvas-1`} ref={canvasRef} id={`${instanceId}-canvas`} />
+      <span data-testid={`${instanceId}-viewer3-d-span-2`} className="viewer-badge">{tr(label)}</span>
 
       {loading && inViewport && (
-        <div className="viewer-loading" data-testid="viewer-loading">
-          Carregando modelo…
-        </div>
+        <div className="viewer-loading" data-testid={instanceId + "-" + ("viewer-loading")}>{tr("Carregando modelo…")}</div>
       )}
     </div>
 
@@ -413,46 +415,46 @@ export default function Viewer3D({
         {/* COR */}
         <div
           className={`viewer-color-plus ${pickerOpen ? "is-open" : ""}`}
-          data-testid="viewer-color-plus"
+          data-testid={instanceId + "-" + ("viewer-color-plus")}
         >
           <button
             type="button"
             className="viewer-plus-trigger"
             onClick={() => setPickerOpen((v) => !v)}
             aria-expanded={pickerOpen}
-            aria-label="Personalizar cor"
-            data-cursor={pickerOpen ? "Fechar" : "Personalizar"}
-            data-testid="viewer-plus-trigger"
+            aria-label={tr("Personalizar cor")}
+            data-cursor={tr(pickerOpen ? "Fechar" : "Personalizar")}
+            data-testid={instanceId + "-" + ("viewer-plus-trigger")}
           >
             <span className="plus-dot" style={{ background: color }} aria-hidden />
-            <span className="plus-label">
-              <span className="plus-sign">+</span>
-              <span>Cor</span>
+            <span data-testid={`${instanceId}-viewer3-d-span-3`} className="plus-label">
+              <span data-testid={`${instanceId}-viewer3-d-span-4`} className="plus-sign">+</span>
+              <span data-testid={`${instanceId}-viewer3-d-span-5`}>{tr("Cor")}</span>
             </span>
           </button>
 
           {pickerOpen && (
-            <div className="viewer-plus-panel" role="dialog" aria-label="Selecionar cor e intensidade">
+            <div data-testid={`${instanceId}-viewer3-d-div-6`} className="viewer-plus-panel" role="dialog" aria-label={tr("Selecionar cor e intensidade")}>
               <div className="plus-row">
-                <label className="plus-field plus-field--color">
-                  <span className="plus-field-label">Cor</span>
-                  <span className="plus-color-input-wrap" style={{ background: color }}>
+                <label data-testid={`${instanceId}-viewer3-d-label-7`} className="plus-field plus-field--color">
+                  <span data-testid={`${instanceId}-viewer3-d-span-8`} className="plus-field-label">{tr("Cor")}</span>
+                  <span data-testid={`${instanceId}-viewer3-d-span-9`} className="plus-color-input-wrap" style={{ background: color }}>
                     <input
                       type="color"
                       value={color}
                       onChange={(e) => sharedColorStore.set({ color: e.target.value })}
-                      data-testid="viewer-color-input"
-                      aria-label="Espectro de cor RGB"
+                      data-testid={instanceId + "-" + ("viewer-color-input")}
+                      aria-label={tr("Espectro de cor RGB")}
                     />
                   </span>
-                  <span className="plus-hex">{color.toUpperCase()}</span>
+                  <span data-testid={`${instanceId}-viewer3-d-span-10`} className="plus-hex">{color.toUpperCase()}</span>
                 </label>
               </div>
               <div className="plus-row">
-                <label className="plus-field plus-field--range">
-                  <span className="plus-field-label">
-                    <span>Intensidade</span>
-                    <span className="plus-field-value">{intensity}%</span>
+                <label data-testid={`${instanceId}-viewer3-d-label-11`} className="plus-field plus-field--range">
+                  <span data-testid={`${instanceId}-viewer3-d-span-12`} className="plus-field-label">
+                    <span data-testid={`${instanceId}-viewer3-d-span-13`}>{tr("Intensidade")}</span>
+                    <span data-testid={`${instanceId}-viewer3-d-span-14`} className="plus-field-value">{intensity}%</span>
                   </span>
                   <input
                     type="range"
@@ -461,8 +463,8 @@ export default function Viewer3D({
                     step={1}
                     value={intensity}
                     onChange={(e) => sharedColorStore.set({ intensity: parseInt(e.target.value, 10) })}
-                    data-testid="viewer-intensity-input"
-                    aria-label="Intensidade da cor"
+                    data-testid={instanceId + "-" + ("viewer-intensity-input")}
+                    aria-label={tr("Intensidade da cor")}
                     style={{
                       background: `linear-gradient(90deg, ${color} 0%, ${color} ${intensity}%, rgba(255,255,255,0.12) ${intensity}%, rgba(255,255,255,0.12) 100%)`,
                     }}
@@ -474,11 +476,9 @@ export default function Viewer3D({
                   type="button"
                   className="plus-reset"
                   onClick={() => sharedColorStore.set({ color: "#f5f7fa", intensity: 15 })}
-                  data-cursor="Resetar"
-                  data-testid="viewer-color-reset"
-                >
-                  Resetar
-                </button>
+                  data-cursor={tr("Resetar")}
+                  data-testid={instanceId + "-" + ("viewer-color-reset")}
+                >{tr("Resetar")}</button>
               </div>
             </div>
           )}
@@ -491,9 +491,9 @@ export default function Viewer3D({
             className="viewer-controls-trigger"
             onClick={() => setControlsOpen((v) => !v)}
             aria-expanded={controlsOpen}
-            aria-label={controlsOpen ? "Fechar controles" : "Abrir controles"}
-            data-cursor={controlsOpen ? "Fechar" : "Controles"}
-            data-testid="viewer-controls-toggle"
+            aria-label={tr(controlsOpen ? "Fechar controles" : "Abrir controles")}
+            data-cursor={tr(controlsOpen ? "Fechar" : "Controles")}
+            data-testid={instanceId + "-" + ("viewer-controls-toggle")}
           >
             <span className="ctrl-icon" aria-hidden>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -507,37 +507,37 @@ export default function Viewer3D({
                 <path d="M16.24 7.76l2.83-2.83" />
               </svg>
             </span>
-            <span className="plus-label">
-              <span className="plus-sign">+</span>
-              <span>Controles</span>
+            <span data-testid={`${instanceId}-viewer3-d-span-15`} className="plus-label">
+              <span data-testid={`${instanceId}-viewer3-d-span-16`} className="plus-sign">+</span>
+              <span data-testid={`${instanceId}-viewer3-d-span-17`}>{tr("Controles")}</span>
             </span>
           </button>
 
           {controlsOpen && (
-            <div className="viewer-controls" data-testid="viewer-controls">
-              <button type="button" className="viewer-ctrl-btn" onClick={() => rotateBy(-0.6)} aria-label="Girar para a esquerda" data-testid="ctrl-rotate-left">
+            <div className="viewer-controls" data-testid={instanceId + "-" + ("viewer-controls")}>
+              <button type="button" className="viewer-ctrl-btn" onClick={() => rotateBy(-0.6)} aria-label={tr("Girar para a esquerda")} data-testid={instanceId + "-" + ("ctrl-rotate-left")}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M3 12a9 9 0 1 0 3-6.7" />
                   <polyline points="3 4 3 10 9 10" />
                 </svg>
               </button>
-              <button type="button" className="viewer-ctrl-btn" onClick={() => rotateBy(0.6)} aria-label="Girar para a direita" data-testid="ctrl-rotate-right">
+              <button type="button" className="viewer-ctrl-btn" onClick={() => rotateBy(0.6)} aria-label={tr("Girar para a direita")} data-testid={instanceId + "-" + ("ctrl-rotate-right")}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 12a9 9 0 1 1-3-6.7" />
                   <polyline points="21 4 21 10 15 10" />
                 </svg>
               </button>
-              <button type="button" className="viewer-ctrl-btn" onClick={() => tiltBy(-0.35)} aria-label="Inclinar para cima" data-testid="ctrl-tilt-up">
+              <button type="button" className="viewer-ctrl-btn" onClick={() => tiltBy(-0.35)} aria-label={tr("Inclinar para cima")} data-testid={instanceId + "-" + ("ctrl-tilt-up")}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="18 15 12 9 6 15" />
                 </svg>
               </button>
-              <button type="button" className="viewer-ctrl-btn" onClick={() => tiltBy(0.35)} aria-label="Inclinar para baixo" data-testid="ctrl-tilt-down">
+              <button type="button" className="viewer-ctrl-btn" onClick={() => tiltBy(0.35)} aria-label={tr("Inclinar para baixo")} data-testid={instanceId + "-" + ("ctrl-tilt-down")}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </button>
-              <button type="button" className="viewer-ctrl-btn" onClick={() => zoomBy(-3)} aria-label="Aproximar zoom" data-testid="ctrl-zoom-in">
+              <button type="button" className="viewer-ctrl-btn" onClick={() => zoomBy(-3)} aria-label={tr("Aproximar zoom")} data-testid={instanceId + "-" + ("ctrl-zoom-in")}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="7" />
                   <line x1="11" y1="8" x2="11" y2="14" />
@@ -545,14 +545,14 @@ export default function Viewer3D({
                   <line x1="20" y1="20" x2="16.5" y2="16.5" />
                 </svg>
               </button>
-              <button type="button" className="viewer-ctrl-btn" onClick={() => zoomBy(3)} aria-label="Afastar zoom" data-testid="ctrl-zoom-out">
+              <button type="button" className="viewer-ctrl-btn" onClick={() => zoomBy(3)} aria-label={tr("Afastar zoom")} data-testid={instanceId + "-" + ("ctrl-zoom-out")}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="7" />
                   <line x1="8" y1="11" x2="14" y2="11" />
                   <line x1="20" y1="20" x2="16.5" y2="16.5" />
                 </svg>
               </button>
-              <button type="button" className="viewer-ctrl-btn viewer-ctrl-btn--reset" onClick={resetView} aria-label="Reset da visão" data-testid="ctrl-reset">
+              <button type="button" className="viewer-ctrl-btn viewer-ctrl-btn--reset" onClick={resetView} aria-label={tr("Reset da visão")} data-testid={instanceId + "-" + ("ctrl-reset")}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M3 12a9 9 0 1 0 9-9" />
                   <polyline points="3 4 3 10 9 10" />

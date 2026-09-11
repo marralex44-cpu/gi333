@@ -1,40 +1,40 @@
+import { useLocale } from "../i18n/LocaleProvider";
 export default function Footer() {
+  const { tr } = useLocale();
   return (
     <footer className="gi-footer" data-testid="gi-footer">
       <div className="shell">
         <div className="footer-grid">
           {/* Marca */}
           <div className="footer-col footer-brand">
-            <img
+            <img data-testid="footer-img-1"
               src="/brand/logo-full-tight.png"
-              alt="Gi Inovações para calçados"
+              alt={tr("Gi Inovações para calçados")}
               className="gi-logo-full"
               loading="lazy"
               decoding="async"
             />
-            <p className="footer-brand-city">Parobé, Rio Grande do Sul</p>
-            <p className="footer-brand-since">Desde 2001</p>
+            <p data-testid="footer-p-2" className="footer-brand-city">{tr("Parobé, Rio Grande do Sul")}</p>
+            <p data-testid="footer-p-3" className="footer-brand-since">{tr("Desde 2001")}</p>
           </div>
 
           {/* Atendimento */}
           <div className="footer-col">
-            <h5>Atendimento</h5>
+            <h5 data-testid="footer-h5-4">{tr("Atendimento")}</h5>
             <a href="tel:+555135436151" data-testid="footer-phone-1">51 3543.6151</a>
             <a href="tel:+555135436151" data-testid="footer-phone-2">51 3543.6151</a>
             <a
               href="mailto:gicompany@gicompany.ind.br"
               data-testid="footer-email"
-            >
-              gicompany@gicompany.ind.br
-            </a>
+            >{tr("gicompany@gicompany.ind.br")}</a>
 
             {/* Redes sociais — agora abaixo do email */}
-            <div className="footer-socials" aria-label="Redes sociais da Gi">
+            <div className="footer-socials" aria-label={tr("Redes sociais da Gi")}>
               <a
                 href="https://www.instagram.com/gicompanyoficial/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram da Gi"
+                aria-label={tr("Instagram da Gi")}
                 data-testid="footer-social-instagram"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -47,7 +47,7 @@ export default function Footer() {
                 href="https://www.facebook.com/gicompanyoficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook da Gi"
+                aria-label={tr("Facebook da Gi")}
                 data-testid="footer-social-facebook"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -58,7 +58,7 @@ export default function Footer() {
                 href="https://linkedin.com/company/gicompanyoficial"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn da Gi"
+                aria-label={tr("LinkedIn da Gi")}
                 data-testid="footer-social-linkedin"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -69,12 +69,12 @@ export default function Footer() {
               </a>
               {/* WhatsApp — link ativo */}
               <a
-                href="https://web.whatsapp.com/send?phone=555135436151&text=Ol%C3%A1%21+Acessei+o+site+e+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre"
+                href={`https://web.whatsapp.com/send?phone=555135436151&text=${encodeURIComponent(tr("Olá! Acessei o site e gostaria de mais informações sobre"))}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Conversar com a Gi no WhatsApp"
+                aria-label={tr("Conversar com a Gi no WhatsApp")}
                 data-testid="footer-social-whatsapp"
-                title="Fale conosco no WhatsApp"
+                title={tr("Fale conosco no WhatsApp")}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
@@ -85,21 +85,21 @@ export default function Footer() {
 
           {/* Nos encontre */}
           <div className="footer-col">
-            <h5>Nos encontre</h5>
-            <p>RS 239, 5075 — bairro Colina do Leão — Parobé/RS</p>
-            <p>RS 239, 8080 — bairro Integração — Parobé/RS</p>
-            <p className="footer-hours">
-              <span>2ª a 5ª: 7:00 às 11:30 / 13:00 às 17:30</span>
-              <span>6ª: 7:00 às 11:30 / 13:00 às 16:30</span>
+            <h5 data-testid="footer-h5-5">{tr("Nos encontre")}</h5>
+            <p data-testid="footer-p-6">{tr("RS 239, 5075 — bairro Colina do Leão — Parobé/RS")}</p>
+            <p data-testid="footer-p-7">{tr("RS 239, 8080 — bairro Integração — Parobé/RS")}</p>
+            <p data-testid="footer-p-8" className="footer-hours">
+              <span data-testid="footer-span-9">{tr("2ª a 5ª: 7:00 às 11:30 / 13:00 às 17:30")}</span>
+              <span data-testid="footer-span-10">{tr("6ª: 7:00 às 11:30 / 13:00 às 16:30")}</span>
             </p>
           </div>
 
           {/* Selo Origem Sustentável */}
           <div className="footer-col footer-seal">
-            <h5>Certificação</h5>
+            <h5 data-testid="footer-h5-11">{tr("Certificação")}</h5>
             <img
               src="/assets/selo-origem-sustentavel.png"
-              alt="Selo Origem Sustentável"
+              alt={tr("Selo Origem Sustentável")}
               className="footer-seal-img"
               loading="lazy"
               decoding="async"
@@ -109,8 +109,8 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 Gi Inovações. Todos os direitos reservados.</span>
-          <span style={{ color: "var(--cor-texto-dim)" }}>Parobé / RS · Brasil</span>
+          <span data-testid="footer-span-12">{tr("© 2026 Gi Inovações. Todos os direitos reservados.")}</span>
+          <span data-testid="footer-span-13" style={{ color: "var(--cor-texto-dim)" }}>{tr("Parobé / RS · Brasil")}</span>
         </div>
       </div>
     </footer>

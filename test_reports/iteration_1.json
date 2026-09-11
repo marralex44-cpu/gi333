@@ -1,0 +1,67 @@
+{
+  "summary": "Executed backend pytest regression and frontend E2E validation for pt-BR/es locale switch, persistence, responsive behavior, contact/mailto, 3D flows, and admin/article/upload regressions on public preview URL.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "AdminLogin/AdminDashboard",
+        "issue": "Interactive admin controls/inputs still lack data-testid attributes, reducing selector stability and maintainability for required automated regressions.",
+        "selector": "admin form buttons/inputs (role-label based only)",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Gi Reboot 3D model loading",
+        "issue": "Console repeatedly logs GLTF parse failures (Unexpected token '<') and failed model loads. Direct check shows /assets/3d/GI014.glb responds with content-type text/html instead of model/gltf-binary, breaking at least one model in carousel.",
+        "affected_selectors": [
+          "[data-testid='gi-reboot-3d-carousel']",
+          "[data-testid$='-viewer-next']"
+        ]
+      },
+      {
+        "flow": "Console hygiene",
+        "issue": "React warning detected: defaultMuted/defaultmuted prop warning from PingPongVideo usage.",
+        "affected_selectors": [
+          "/app/frontend/src/components/PingPongVideo.jsx"
+        ]
+      }
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_public_api_regression.py",
+    "/app/test_reports/pytest/pytest_results.xml",
+    "/root/.emergent/automation_output/20260911_170555/console_20260911_170555.log",
+    "/root/.emergent/automation_output/20260911_170816/console_20260911_170816.log",
+    "/root/.emergent/automation_output/20260911_171111/console_20260911_171111.log"
+  ],
+  "action_items": [
+    "Fix static asset serving for /assets/3d/GI014.glb (must return valid GLB bytes + model/gltf-binary content-type).",
+    "Resolve React defaultMuted warning in PingPongVideo to keep console clean.",
+    "Add data-testid to admin auth/dashboard interactive controls for stable E2E coverage.",
+    "After fixes, rerun Gi Reboot/EVA 3D carousel traversal and console checks."
+  ],
+  "critical_code_review_comments": [
+    "Hardcoded admin credentials in backend/server.py remain a security risk for production-grade auth (preexisting behavior).",
+    "Admin pages do not follow data-testid testability convention used across public pages.",
+    "3D asset delivery inconsistency (GI014 served as HTML) indicates static hosting/routing mismatch for binary model files."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_public_api_regression.py",
+    "/app/test_reports/iteration_1.json"
+  ],
+  "success_rate": {
+    "backend": "100%",
+    "frontend": "90%"
+  },
+  "test_credentials": "Read from /app/memory/test_credentials.md (Admin: gi888 / Giinova2020)",
+  "seed_data_creation": "Created temporary TEST articles via API and UI; all cleaned up during test run.",
+  "retest_needed": true,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Locale switch/persistence/responsive/menu/contact/mailto/admin CRUD/upload regressions were executed on public URL. Most flows pass. Focus next run on 3D model asset integrity (especially GI014.glb) and post-fix console clean run.",
+  "rca of the issue": "Root cause for 3D failure is likely incorrect static file mapping or missing/corrupted GI014.glb artifact: endpoint returns HTTP 200 but content-type text/html and GLTF parser receives HTML (<!doctype ...>), causing runtime parse exception in Viewer3D. Repro: open /gi-reboot, switch locale optionally, interact with carousel -> console shows 'Falha ao carregar modelo 3D: SyntaxError Unexpected token <'."
+}

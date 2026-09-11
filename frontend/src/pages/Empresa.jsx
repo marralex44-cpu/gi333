@@ -1,3 +1,4 @@
+import { useLocale } from "../i18n/LocaleProvider";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useReveal, splitWords } from "../lib/useReveal";
@@ -151,6 +152,7 @@ const MVV = [
 ];
 
 export default function Empresa() {
+  const { tr } = useLocale();
   useReveal("empresa");
   const [openIdx, setOpenIdx] = useState(0);
   const heroTrailRef = useRef(null);
@@ -191,7 +193,7 @@ export default function Empresa() {
         />
         <div className="shell empresa-hero-content">
           <h1 className="empresa-hero-title text-reveal" data-testid="empresa-hero-title">
-            {splitWords("Nossa história")}
+            {splitWords(tr("Nossa história"))}
           </h1>
         </div>
       </section>
@@ -199,21 +201,16 @@ export default function Empresa() {
       {/* SEÇÃO 2 — NOSSA HISTÓRIA (timeline) */}
       <section className="section sec-white sec-timeline-dots">
         <div className="shell">
-          <p className="body-lg reveal" style={{ maxWidth: "72ch", color: "var(--cor-texto-muted)" }}>
-            Desde 2001, a Gi cresce unindo matrizaria de alta precisão,
-            desenvolvimento de solados e compostos em EVA e E-TPU, sempre com
-            foco em desempenho técnico, seriedade nas entregas e parceria de
-            longo prazo com quem produz calçados e componentes industriais.
-          </p>
+          <p data-testid="empresa-p-1" className="body-lg reveal" style={{ maxWidth: "72ch", color: "var(--cor-texto-muted)" }}>{tr("Desde 2001, a Gi cresce unindo matrizaria de alta precisão, desenvolvimento de solados e compostos em EVA e E-TPU, sempre com foco em desempenho técnico, seriedade nas entregas e parceria de longo prazo com quem produz calçados e componentes industriais.")}</p>
 
           <ol className="gi-timeline mt-xl" style={{ marginTop: "clamp(3.5rem, 7vw, 6rem)" }}>
-            {TIMELINE.map((m) => (
+            {TIMELINE.map((m, localeIndex0) => (
               <li className="gi-timeline-item reveal" key={m.y}>
                 <span className="gi-timeline-dot" aria-hidden="true" />
                 <div className="gi-timeline-year">{m.y}</div>
                 <div className="gi-timeline-body">
-                  <h3>{m.t}</h3>
-                  <p>{m.d}</p>
+                  <h3 data-testid={`empresa-h3-2-${localeIndex0}`}>{tr(m.t)}</h3>
+                  <p data-testid={`empresa-p-3-${localeIndex0}`}>{tr(m.d)}</p>
                 </div>
               </li>
             ))}
@@ -228,25 +225,17 @@ export default function Empresa() {
           className="sec-inovacao-video"
         />
         <div className="shell">
-          <h2 className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
-            {splitWords("Inovação, matrizaria e estrutura integrada")}
+          <h2 data-testid="empresa-h2-4" className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
+            {splitWords(tr("Inovação, matrizaria e estrutura integrada"))}
           </h2>
-          <p className="body-lg reveal mt-lg" style={{ maxWidth: "76ch", color: "var(--cor-texto-muted)" }}>
-            A Gi integra, em uma mesma estrutura, matrizaria, injeção de
-            solados em EVA e E-TPU e desenvolvimento de compostos. Com equipe
-            própria de projetistas, CNCs de 5 eixos e laboratório 3D,
-            desenvolve matrizes para solados e componentes com foco em
-            encaixe, repetibilidade e controle dimensional — reduzindo
-            retrabalho, facilitando ajustes e dando mais segurança para P<span className="amp">&amp;</span>D
-            testar novas soluções com suporte técnico próximo.
-          </p>
+          <p data-testid="empresa-p-5" className="body-lg reveal mt-lg" style={{ maxWidth: "76ch", color: "var(--cor-texto-muted)" }}>{tr("A Gi integra, em uma mesma estrutura, matrizaria, injeção de solados em EVA e E-TPU e desenvolvimento de compostos. Com equipe própria de projetistas, CNCs de 5 eixos e laboratório 3D, desenvolve matrizes para solados e componentes com foco em encaixe, repetibilidade e controle dimensional — reduzindo retrabalho, facilitando ajustes e dando mais segurança para P")}<span data-testid="empresa-span-6" className="amp">{tr("&")}</span>{tr("D testar novas soluções com suporte técnico próximo.")}</p>
 
           <div className="what-grid mt-xl">
-            {ESTRUTURA.map((p) => (
-              <div className="what-card reveal" key={p.n} data-cursor="Ver mais">
-                <span className="num">{p.n}</span>
-                <h4>{p.t}</h4>
-                <p>{p.d}</p>
+            {ESTRUTURA.map((p, localeIndex1) => (
+              <div className="what-card reveal" key={p.n} data-cursor={tr("Ver mais")}>
+                <span data-testid={`empresa-span-7-${localeIndex1}`} className="num">{p.n}</span>
+                <h4 data-testid={`empresa-h4-8-${localeIndex1}`}>{tr(p.t)}</h4>
+                <p data-testid={`empresa-p-9-${localeIndex1}`}>{tr(p.d)}</p>
               </div>
             ))}
           </div>
@@ -256,21 +245,16 @@ export default function Empresa() {
       {/* SEÇÃO 4 — PESSOAS E CONTINUIDADE */}
       <section className="section sec-pessoas-center pessoas-hero-inverted">
         <div className="shell text-center">
-          <h2 className="h-section text-reveal" style={{ maxWidth: "32ch", marginLeft: "auto", marginRight: "auto" }}>
-            {splitWords("Pessoas e continuidade")}
+          <h2 data-testid="empresa-h2-10" className="h-section text-reveal" style={{ maxWidth: "32ch", marginLeft: "auto", marginRight: "auto" }}>
+            {splitWords(tr("Pessoas e continuidade"))}
           </h2>
-          <p className="body-lg reveal mt-lg" style={{ maxWidth: "76ch", color: "var(--cor-texto-muted)", marginLeft: "auto", marginRight: "auto" }}>
-            Por trás das máquinas, a Gi é feita por uma equipe experiente e
-            estável, com baixa rotatividade e proximidade entre direção e chão
-            de fábrica — o que preserva conhecimento técnico e garante
-            consistência nos projetos.
-          </p>
+          <p data-testid="empresa-p-11" className="body-lg reveal mt-lg" style={{ maxWidth: "76ch", color: "var(--cor-texto-muted)", marginLeft: "auto", marginRight: "auto" }}>{tr("Por trás das máquinas, a Gi é feita por uma equipe experiente e estável, com baixa rotatividade e proximidade entre direção e chão de fábrica — o que preserva conhecimento técnico e garante consistência nos projetos.")}</p>
 
           <div className="what-grid mt-xl">
-            {PESSOAS.map((p) => (
+            {PESSOAS.map((p, localeIndex2) => (
               <div className="what-card reveal" key={p.t}>
-                <h4>{p.t}</h4>
-                <p>{p.d}</p>
+                <h4 data-testid={`empresa-h4-12-${localeIndex2}`}>{tr(p.t)}</h4>
+                <p data-testid={`empresa-p-13-${localeIndex2}`}>{tr(p.d)}</p>
               </div>
             ))}
           </div>
@@ -284,12 +268,10 @@ export default function Empresa() {
           className="sec-mvv-video"
         />
         <div className="shell">
-          <h2 className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
-            {splitWords("Missão, visão, valores e política de qualidade")}
+          <h2 data-testid="empresa-h2-14" className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
+            {splitWords(tr("Missão, visão, valores e política de qualidade"))}
           </h2>
-          <p className="body-lg reveal mt-lg" style={{ maxWidth: "62ch", color: "var(--cor-texto-muted)" }}>
-            A base que orienta as decisões técnicas e industriais da Gi.
-          </p>
+          <p data-testid="empresa-p-15" className="body-lg reveal mt-lg" style={{ maxWidth: "62ch", color: "var(--cor-texto-muted)" }}>{tr("A base que orienta as decisões técnicas e industriais da Gi.")}</p>
 
           <div className="accordion mt-xl">
             {MVV.map((item, i) => (
@@ -298,21 +280,21 @@ export default function Empresa() {
                 key={item.t}
                 data-testid={`acc-${i}`}
               >
-                <button
+                <button data-testid={`empresa-button-16-${i}`}
                   className="acc-trigger"
                   onClick={() => setOpenIdx(openIdx === i ? -1 : i)}
                   aria-expanded={openIdx === i}
-                  data-cursor={openIdx === i ? "Fechar" : "Abrir"}
+                  data-cursor={tr(openIdx === i ? "Fechar" : "Abrir")}
                 >
-                  <span>{item.t}</span>
+                  <span data-testid={`empresa-span-17-${i}`}>{tr(item.t)}</span>
                   <span className="plus" aria-hidden>+</span>
                 </button>
                 <div className="acc-content">
                   <div className="acc-content-inner">
-                    {item.d && <p>{item.d}</p>}
+                    {item.d && <p data-testid={`empresa-p-18-${i}`}>{tr(item.d)}</p>}
                     {item.bullets && (
                       <ul className="acc-bullets">
-                        {item.bullets.map((b, idx) => <li key={idx}>{b}</li>)}
+                        {item.bullets.map((b, idx) => <li key={idx}>{tr(b)}</li>)}
                       </ul>
                     )}
                   </div>
@@ -321,10 +303,7 @@ export default function Empresa() {
             ))}
           </div>
 
-          <p className="reveal mt-xl" style={{ maxWidth: "70ch", color: "var(--cor-texto-muted)" }}>
-            Esta política orienta as ações e decisões da Gi, garantindo a
-            excelência dos produtos e soluções entregues ao mercado.
-          </p>
+          <p data-testid="empresa-p-19" className="reveal mt-xl" style={{ maxWidth: "70ch", color: "var(--cor-texto-muted)" }}>{tr("Esta política orienta as ações e decisões da Gi, garantindo a excelência dos produtos e soluções entregues ao mercado.")}</p>
         </div>
       </section>
 

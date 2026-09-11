@@ -1,3 +1,4 @@
+import { useLocale } from "../i18n/LocaleProvider";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /**
@@ -12,6 +13,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
  *  - Suporta arrastar horizontal em touch/mouse (drag-to-scroll).
  */
 export default function SustainMarquee({ items = [], icons = [] }) {
+  const { tr } = useLocale();
   const trackRef = useRef(null);
   const containerRef = useRef(null);
   const [paused, setPaused] = useState(false);
@@ -88,9 +90,9 @@ export default function SustainMarquee({ items = [], icons = [] }) {
 
   return (
     <div className="sustain-marquee-wrap" ref={containerRef}>
-      <div
+      <div data-testid="sustain-marquee-div-1"
         className="sustain-marquee sustain-marquee--interactive"
-        aria-label="Frentes de sustentabilidade da Gi"
+        aria-label={tr("Frentes de sustentabilidade da Gi")}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => {
           if (!dragStateRef.current.dragging) setPaused(false);
@@ -106,13 +108,13 @@ export default function SustainMarquee({ items = [], icons = [] }) {
             const iconIdx = i % items.length;
             const isClone = i >= items.length;
             return (
-              <article
+              <article data-testid={`sustain-marquee-article-2-${i}`}
                 className={`sustain-mq-card sustain-mq-card--${tone}`}
                 key={`${item.t}-${i}`}
                 aria-hidden={isClone ? "true" : undefined}
                 tabIndex={isClone ? -1 : 0}
                 role="group"
-                data-cursor="Ver"
+                data-cursor={tr("Ver")}
                 onFocus={() => setPaused(true)}
                 onBlur={() => {
                   // Só retoma se nada mais estiver com hover/drag
@@ -125,8 +127,8 @@ export default function SustainMarquee({ items = [], icons = [] }) {
                 <span className="sustain-mq-icon" aria-hidden="true">
                   {icons[iconIdx]}
                 </span>
-                <h3 className="sustain-mq-card-title">{item.t}</h3>
-                <p className="sustain-mq-card-desc">{item.d}</p>
+                <h3 data-testid={`sustain-marquee-h3-3-${i}`} className="sustain-mq-card-title">{tr(item.t)}</h3>
+                <p data-testid={`sustain-marquee-p-4-${i}`} className="sustain-mq-card-desc">{tr(item.d)}</p>
               </article>
             );
           })}

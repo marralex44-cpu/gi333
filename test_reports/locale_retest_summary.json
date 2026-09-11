@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-11",
+  "type": "targeted_self_retest_after_iteration_1",
+  "language_feature": "passed comprehensive frontend testing",
+  "backend": "9/9 tests passed in iteration_1",
+  "fix_verification": {
+    "missing_model_handling": "GI014 absent in reference repository; explicitly unavailable and disabled, no fake replacement and no invalid requests",
+    "available_models": "GI015 -> GI019 -> GI020 -> GI015 passed, visible canvas rendered",
+    "spanish_3d_controls": "color dialog and rotation passed",
+    "ping_pong_video": "no defaultMuted warnings",
+    "admin_test_ids": "login, local editor, preview, clear and logout passed; no article published during targeted retest",
+    "javascript_errors": []
+  },
+  "build": "passed with preexisting postcss-calc warnings",
+  "remaining_limitations": [
+    "GI014 requires original asset to enable 3D rendering",
+    "New editorial article bodies are not automatically translated",
+    "Legacy mailto requires email client and manual attachments",
+    "MOCKED legacy antirrobot checkbox, placeholder privacy link and fallback article teasers"
+  ]
+}

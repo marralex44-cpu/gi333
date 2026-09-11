@@ -22,6 +22,7 @@ export default function PingPongVideo({
     video.setAttribute("autoplay", "");
     video.setAttribute("loop", "");
     video.muted = true;
+    video.defaultMuted = true;
     video.loop = true;
     video.playsInline = true;
 
@@ -55,7 +56,6 @@ export default function PingPongVideo({
       style={style}
       src={src}
       muted={true}
-      defaultMuted
       autoPlay
       loop
       playsInline

@@ -4,6 +4,8 @@ import "@/App.css";
 import "./styles/blog.css";
 
 import Nav from "./components/Nav";
+import { LocaleProvider } from "./i18n/LocaleProvider";
+import { LocaleMetadata } from "./i18n/LocaleMetadata";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
@@ -92,7 +94,10 @@ function Shell() {
 function App() {
   return (
     <BrowserRouter>
+      <LocaleProvider>
+      <LocaleMetadata />
       <Shell />
+      </LocaleProvider>
     </BrowserRouter>
   );
 }

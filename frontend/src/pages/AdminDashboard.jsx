@@ -204,17 +204,17 @@ export default function AdminDashboard() {
   };
 
   return (
-    <main className="page page-admin">
+    <main className="page page-admin" lang="pt-BR" data-testid="admin-dashboard">
       <section className="section admin-hero">
         <div className="shell">
           <div className="admin-topbar">
             <div>
               <span className="eyebrow">Painel Gi Inovações</span>
-              <h1 className="h-section" style={{ marginTop: ".4rem" }}>Gerenciar artigos</h1>
+              <h1 className="h-section" style={{ marginTop: ".4rem" }} data-testid="admin-dashboard-title">Gerenciar artigos</h1>
             </div>
             <div className="admin-topbar-actions">
-              <button className="btn-ghost" onClick={startNew}>+ Novo artigo</button>
-              <button className="btn-ghost" onClick={logout}>Sair</button>
+              <button className="btn-ghost" onClick={startNew} data-testid="admin-new-article">+ Novo artigo</button>
+              <button className="btn-ghost" onClick={logout} data-testid="admin-logout">Sair</button>
             </div>
           </div>
         </div>
@@ -223,14 +223,14 @@ export default function AdminDashboard() {
       <section className="section admin-editor-section">
         <div className="shell admin-layout">
           {/* ================== EDITOR ================== */}
-          <form className="admin-editor" onSubmit={onSubmit}>
+          <form className="admin-editor" onSubmit={onSubmit} data-testid="admin-article-form">
             <div className="admin-editor-head">
-              <h2 className="h-tag">{editing ? "Editar artigo" : "Novo artigo"}</h2>
+              <h2 className="h-tag" data-testid="admin-editor-title">{editing ? "Editar artigo" : "Novo artigo"}</h2>
               <div className="admin-editor-tabs">
-                <button type="button" className={!preview ? "active" : ""} onClick={() => setPreview(false)}>
+                <button type="button" className={!preview ? "active" : ""} onClick={() => setPreview(false)} data-testid="admin-editor-tab">
                   Editar
                 </button>
-                <button type="button" className={preview ? "active" : ""} onClick={() => setPreview(true)}>
+                <button type="button" className={preview ? "active" : ""} onClick={() => setPreview(true)} data-testid="admin-preview-tab">
                   Preview
                 </button>
               </div>
@@ -240,34 +240,36 @@ export default function AdminDashboard() {
               <div className="admin-editor-grid">
                 <label className="admin-field admin-field-full">
                   <span>Título *</span>
-                  <input type="text" value={form.title} onChange={onChange("title")} required />
+                  <input type="text" value={form.title} onChange={onChange("title")} required data-testid="admin-article-title" />
                 </label>
                 <label className="admin-field">
                   <span>Slug (URL)</span>
                   <input
                     type="text"
                     value={form.slug}
+                    data-testid="admin-article-slug"
                     onChange={onChange("slug")}
                     placeholder="gerado a partir do título"
                   />
                 </label>
                 <label className="admin-field">
                   <span>Categoria</span>
-                  <input type="text" value={form.category} onChange={onChange("category")} placeholder="Ex: E-TPU, Matrizes" />
+                  <input type="text" value={form.category} onChange={onChange("category")} placeholder="Ex: E-TPU, Matrizes" data-testid="admin-article-category" />
                 </label>
                 <label className="admin-field">
                   <span>Autor</span>
-                  <input type="text" value={form.author} onChange={onChange("author")} />
+                  <input type="text" value={form.author} onChange={onChange("author")} data-testid="admin-article-author" />
                 </label>
                 <label className="admin-field">
                   <span>Tempo de leitura</span>
-                  <input type="text" value={form.read_time} onChange={onChange("read_time")} placeholder="Ex: 5 min" />
+                  <input type="text" value={form.read_time} onChange={onChange("read_time")} placeholder="Ex: 5 min" data-testid="admin-article-read-time" />
                 </label>
                 <label className="admin-field admin-field-full">
                   <span>Imagem de capa</span>
                   <div className="admin-upload-row">
                     <input
                       ref={coverInputRef}
+                      data-testid="admin-cover-file"
                       type="file"
                       accept="image/*"
                       onChange={onCoverFile}
@@ -277,6 +279,7 @@ export default function AdminDashboard() {
                       type="button"
                       className="btn-ghost"
                       onClick={() => coverInputRef.current?.click()}
+                      data-testid="admin-cover-upload"
                       disabled={uploadingCover}
                     >
                       {uploadingCover ? "Enviando…" : form.cover_image ? "Trocar imagem" : "Enviar do computador"}
@@ -284,25 +287,26 @@ export default function AdminDashboard() {
                     <input
                       type="text"
                       value={form.cover_image}
+                      data-testid="admin-cover-url"
                       onChange={onChange("cover_image")}
                       placeholder="ou cole a URL (/api/uploads/... ou https://...)"
                       className="admin-upload-url"
                     />
                     {form.cover_image ? (
-                      <button type="button" className="btn-ghost btn-sm btn-danger" onClick={clearCover}>
+                      <button type="button" className="btn-ghost btn-sm btn-danger" onClick={clearCover} data-testid="admin-cover-remove">
                         Remover
                       </button>
                     ) : null}
                   </div>
                   {form.cover_image ? (
                     <div className="admin-cover-preview">
-                      <img src={resolveMediaUrl(form.cover_image)} alt="Capa" />
+                      <img src={resolveMediaUrl(form.cover_image)} alt="Capa" data-testid="admin-cover-image" />
                     </div>
                   ) : null}
                 </label>
                 <label className="admin-field admin-field-full">
                   <span>Resumo</span>
-                  <textarea rows={3} value={form.excerpt} onChange={onChange("excerpt")} />
+                  <textarea rows={3} value={form.excerpt} onChange={onChange("excerpt")} data-testid="admin-article-excerpt" />
                 </label>
                 <label className="admin-field admin-field-full">
                   <span>
@@ -314,6 +318,7 @@ export default function AdminDashboard() {
                   <div className="admin-content-toolbar">
                     <input
                       ref={contentImgInputRef}
+                      data-testid="admin-content-image-file"
                       type="file"
                       accept="image/*"
                       onChange={onContentImageFile}
@@ -323,6 +328,7 @@ export default function AdminDashboard() {
                       type="button"
                       className="btn-ghost btn-sm"
                       onClick={() => contentImgInputRef.current?.click()}
+                      data-testid="admin-content-image-upload"
                       disabled={insertingImage}
                     >
                       {insertingImage ? "Enviando…" : "+ Inserir imagem"}
@@ -330,6 +336,7 @@ export default function AdminDashboard() {
                   </div>
                   <textarea
                     ref={contentTextareaRef}
+                    data-testid="admin-article-content"
                     rows={20}
                     value={form.content}
                     onChange={onChange("content")}
@@ -337,12 +344,12 @@ export default function AdminDashboard() {
                   />
                 </label>
                 <label className="admin-checkbox admin-field-full">
-                  <input type="checkbox" checked={form.published} onChange={onChange("published")} />
+                  <input type="checkbox" checked={form.published} onChange={onChange("published")} data-testid="admin-article-published" />
                   <span>Publicado (visível no site)</span>
                 </label>
               </div>
             ) : (
-              <div className="admin-preview">
+              <div className="admin-preview" data-testid="admin-preview">
                 {form.cover_image ? (
                   <div className="admin-preview-cover">
                     <img src={resolveMediaUrl(form.cover_image)} alt={form.title} />
@@ -359,15 +366,15 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {err ? <div className="admin-error">{err}</div> : null}
-            {msg ? <div className="admin-success">{msg}</div> : null}
+            {err ? <div className="admin-error" role="alert" data-testid="admin-error">{err}</div> : null}
+            {msg ? <div className="admin-success" role="status" data-testid="admin-success">{msg}</div> : null}
 
             <div className="admin-editor-actions">
-              <button type="submit" className="btn-big" disabled={saving} data-cursor="Salvar">
+              <button type="submit" className="btn-big" disabled={saving} data-cursor="Salvar" data-testid="admin-article-save">
                 {saving ? "Salvando…" : editing ? "Salvar alterações" : "Publicar artigo"} <span aria-hidden>→</span>
               </button>
               {editing ? (
-                <button type="button" className="btn-ghost" onClick={startNew}>
+                <button type="button" className="btn-ghost" onClick={startNew} data-testid="admin-editor-cancel">
                   Cancelar edição
                 </button>
               ) : null}
@@ -377,16 +384,16 @@ export default function AdminDashboard() {
           {/* ================== LISTA ================== */}
           <aside className="admin-list">
             <div className="admin-list-head">
-              <h3 className="h-tag">Artigos ({items.length})</h3>
+              <h3 className="h-tag" data-testid="admin-articles-count">Artigos ({items.length})</h3>
             </div>
             {loading ? (
-              <p className="body-md" style={{ color: "var(--cor-texto-muted)" }}>Carregando…</p>
+              <p className="body-md" style={{ color: "var(--cor-texto-muted)" }} data-testid="admin-articles-loading">Carregando…</p>
             ) : items.length === 0 ? (
-              <p className="body-md" style={{ color: "var(--cor-texto-muted)" }}>Nenhum artigo cadastrado ainda.</p>
+              <p className="body-md" style={{ color: "var(--cor-texto-muted)" }} data-testid="admin-articles-empty">Nenhum artigo cadastrado ainda.</p>
             ) : (
               <ul className="admin-list-items">
                 {items.map((a) => (
-                  <li key={a.id} className={`admin-list-item ${editing?.id === a.id ? "is-editing" : ""}`}>
+                  <li key={a.id} className={`admin-list-item ${editing?.id === a.id ? "is-editing" : ""}`} data-testid={`admin-article-${a.id}`}>
                     <div className="admin-list-item-info">
                       <strong>{a.title}</strong>
                       <small>
@@ -395,8 +402,8 @@ export default function AdminDashboard() {
                       </small>
                     </div>
                     <div className="admin-list-item-actions">
-                      <button className="btn-ghost btn-sm" onClick={() => startEdit(a)}>Editar</button>
-                      <button className="btn-ghost btn-sm btn-danger" onClick={() => onDelete(a)}>Excluir</button>
+                      <button className="btn-ghost btn-sm" onClick={() => startEdit(a)} data-testid={`admin-article-edit-${a.id}`}>Editar</button>
+                      <button className="btn-ghost btn-sm btn-danger" onClick={() => onDelete(a)} data-testid={`admin-article-delete-${a.id}`}>Excluir</button>
                     </div>
                   </li>
                 ))}

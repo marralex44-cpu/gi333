@@ -1,3 +1,4 @@
+import { useLocale } from "../i18n/LocaleProvider";
 import { useState } from "react";
 import { useReveal, splitWords } from "../lib/useReveal";
 
@@ -58,6 +59,7 @@ const VAGAS = [
 ];
 
 export default function Contato() {
+  const { tr } = useLocale();
   useReveal("contato");
   const [openIdx, setOpenIdx] = useState(-1);
   const [tab, setTab] = useState("contato");
@@ -98,41 +100,41 @@ export default function Contato() {
     let subject = "";
     let body = "";
     if (tab === "contato") {
-      subject = `[Site Gi] Contato · ${contatoForm.assunto} — ${contatoForm.nome}`;
+      subject = `[Site Gi] ${tr("Contato")} · ${tr(contatoForm.assunto)} — ${contatoForm.nome}`;
       body =
-`Tipo: Contato
-Nome: ${contatoForm.nome}
-E-mail: ${contatoForm.email}
-Telefone: ${contatoForm.telefone}
-Assunto: ${contatoForm.assunto}
-Anexo: ${fileName || "(nenhum)"}
+`Tipo: ${tr("Contato")}
+${tr("Nome")}: ${contatoForm.nome}
+${tr("E-mail")}: ${contatoForm.email}
+${tr("Telefone")}: ${contatoForm.telefone}
+${tr("Assunto")}: ${tr(contatoForm.assunto)}
+${tr("Anexo")}: ${fileName || tr("(nenhum)")}
 
-Mensagem:
+${tr("Mensagem")}:
 ${contatoForm.mensagem}
 `;
     } else if (tab === "trabalhe") {
-      subject = `[Site Gi] Trabalhe Conosco · ${trabalheForm.vaga} — ${trabalheForm.nome}`;
+      subject = `[Site Gi] ${tr("Trabalhe Conosco")} · ${tr(trabalheForm.vaga)} — ${trabalheForm.nome}`;
       body =
-`Tipo: Trabalhe Conosco
-Nome: ${trabalheForm.nome}
-Telefone: ${trabalheForm.telefone}
-Cidade: ${trabalheForm.cidade}
-Vaga: ${trabalheForm.vaga}
-Currículo: ${fileName || "(nenhum)"}
+`Tipo: ${tr("Trabalhe Conosco")}
+${tr("Nome")}: ${trabalheForm.nome}
+${tr("Telefone")}: ${trabalheForm.telefone}
+${tr("Cidade")}: ${trabalheForm.cidade}
+${tr("Vaga")}: ${tr(trabalheForm.vaga)}
+${tr("Currículo")}: ${fileName || tr("(nenhum)")}
 
-Mensagem:
+${tr("Mensagem")}:
 ${trabalheForm.mensagem}
 `;
     } else {
-      subject = `[Site Gi] Ouvidoria — ${ouvidoriaForm.nome || "Anônimo"}`;
+      subject = `[Site Gi] ${tr("Ouvidoria")} — ${ouvidoriaForm.nome || tr("Anônimo")}`;
       body =
-`Tipo: Ouvidoria
-Nome: ${ouvidoriaForm.nome}
-E-mail: ${ouvidoriaForm.email}
-Telefone: ${ouvidoriaForm.telefone}
-Anexo: ${fileName || "(nenhum)"}
+`Tipo: ${tr("Ouvidoria")}
+${tr("Nome")}: ${ouvidoriaForm.nome}
+${tr("E-mail")}: ${ouvidoriaForm.email}
+${tr("Telefone")}: ${ouvidoriaForm.telefone}
+${tr("Anexo")}: ${fileName || tr("(nenhum)")}
 
-Mensagem:
+${tr("Mensagem")}:
 ${ouvidoriaForm.mensagem}
 `;
     }
@@ -149,28 +151,24 @@ ${ouvidoriaForm.mensagem}
       <section className="section pessoas-hero-inverted" style={{ paddingTop: "8rem" }}>
         <div className="shell contact-grid">
           <div>
-            <h2 className="h-section text-reveal" style={{ maxWidth: "20ch" }}>
-              {splitWords("Vamos conversar?")}
+            <h2 data-testid="contato-h2-1" className="h-section text-reveal" style={{ maxWidth: "20ch" }}>
+              {splitWords(tr("Vamos conversar?"))}
             </h2>
-            <p className="body-lg reveal mt-lg" style={{ maxWidth: "48ch", color: "var(--cor-texto-muted)" }}>
-              Preencha os campos ao lado com as informações básicas do seu
-              projeto ou dúvida. Nossa equipe retorna o contato para entender
-              melhor a necessidade e indicar o melhor caminho.
-            </p>
+            <p data-testid="contato-p-2" className="body-lg reveal mt-lg" style={{ maxWidth: "48ch", color: "var(--cor-texto-muted)" }}>{tr("Preencha os campos ao lado com as informações básicas do seu projeto ou dúvida. Nossa equipe retorna o contato para entender melhor a necessidade e indicar o melhor caminho.")}</p>
           </div>
 
           <div className="reveal">
             <div className="contact-tabs" data-testid="contact-tabs">
-              {TABS.map((t) => (
+              {TABS.map((t, localeIndex0) => (
                 <button
                   key={t.id}
                   type="button"
                   className={`contact-tab ${tab === t.id ? "is-active" : ""}`}
                   onClick={() => switchTab(t.id)}
                   data-testid={`tab-${t.id}`}
-                  data-cursor={tab === t.id ? "" : "Selecionar"}
+                  data-cursor={tr(tab === t.id ? "" : "Selecionar")}
                 >
-                  {t.label}
+                  {tr(t.label)}
                 </button>
               ))}
             </div>
@@ -183,39 +181,39 @@ ${ouvidoriaForm.mensagem}
             >
               {tab === "contato" && (
                 <>
-                  <label>
-                    <span>Nome *</span>
+                  <label data-testid="contato-label-3">
+                    <span data-testid="contato-span-4">{tr("Nome *")}</span>
                     <input name="nome" type="text" required value={contatoForm.nome} onChange={change(setContatoForm)} data-testid="form-nome" />
                   </label>
-                  <label>
-                    <span>E-mail *</span>
+                  <label data-testid="contato-label-5">
+                    <span data-testid="contato-span-6">{tr("E-mail *")}</span>
                     <input name="email" type="email" required value={contatoForm.email} onChange={change(setContatoForm)} data-testid="form-email" />
                   </label>
-                  <label>
-                    <span>Telefone *</span>
+                  <label data-testid="contato-label-7">
+                    <span data-testid="contato-span-8">{tr("Telefone *")}</span>
                     <input name="telefone" type="tel" required value={contatoForm.telefone} onChange={change(setContatoForm)} data-testid="form-telefone" />
                   </label>
-                  <label>
-                    <span>Assunto *</span>
+                  <label data-testid="contato-label-9">
+                    <span data-testid="contato-span-10">{tr("Assunto *")}</span>
                     <select name="assunto" value={contatoForm.assunto} onChange={change(setContatoForm)} data-testid="form-assunto">
-                      <option disabled value="">Selecione um assunto</option>
-                      {ASSUNTOS.map((a) => <option key={a}>{a}</option>)}
+                      <option data-testid="contato-option-11" disabled value="">{tr("Selecione um assunto")}</option>
+                      {ASSUNTOS.map((a, localeIndex1) => <option data-testid={`contato-option-12-${localeIndex1}`} key={a} value={a}>{tr(a)}</option>)}
                     </select>
                   </label>
-                  <label className="file-field">
-                    <span>Anexar seu arquivo</span>
+                  <label data-testid="contato-label-13" className="file-field">
+                    <span data-testid="contato-span-14">{tr("Anexar seu arquivo")}</span>
                     <div className="file-input-wrap">
                       <input type="file" onChange={onFile} data-testid="form-file" />
-                      <span className="file-name">{fileName || "Nenhum arquivo selecionado"}</span>
+                      <span data-testid="contato-span-15" className="file-name">{tr(fileName || "Nenhum arquivo selecionado")}</span>
                     </div>
                   </label>
-                  <label>
-                    <span>Mensagem *</span>
+                  <label data-testid="contato-label-16">
+                    <span data-testid="contato-span-17">{tr("Mensagem *")}</span>
                     <textarea
                       name="mensagem"
                       rows={5}
                       required
-                      placeholder="Escrever detalhes do que necessita, informações adicionais, etc."
+                      placeholder={tr("Escrever detalhes do que necessita, informações adicionais, etc.")}
                       value={contatoForm.mensagem}
                       onChange={change(setContatoForm)}
                       data-testid="form-mensagem"
@@ -226,39 +224,39 @@ ${ouvidoriaForm.mensagem}
 
               {tab === "trabalhe" && (
                 <>
-                  <label>
-                    <span>Nome *</span>
+                  <label data-testid="contato-label-18">
+                    <span data-testid="contato-span-19">{tr("Nome *")}</span>
                     <input name="nome" type="text" required value={trabalheForm.nome} onChange={change(setTrabalheForm)} data-testid="form-nome" />
                   </label>
-                  <label>
-                    <span>Telefone *</span>
+                  <label data-testid="contato-label-20">
+                    <span data-testid="contato-span-21">{tr("Telefone *")}</span>
                     <input name="telefone" type="tel" required value={trabalheForm.telefone} onChange={change(setTrabalheForm)} data-testid="form-telefone" />
                   </label>
-                  <label>
-                    <span>Cidade *</span>
+                  <label data-testid="contato-label-22">
+                    <span data-testid="contato-span-23">{tr("Cidade *")}</span>
                     <input name="cidade" type="text" required value={trabalheForm.cidade} onChange={change(setTrabalheForm)} data-testid="form-cidade" />
                   </label>
-                  <label>
-                    <span>Vaga *</span>
+                  <label data-testid="contato-label-24">
+                    <span data-testid="contato-span-25">{tr("Vaga *")}</span>
                     <select name="vaga" value={trabalheForm.vaga} onChange={change(setTrabalheForm)} data-testid="form-vaga">
-                      <option disabled value="">Escolha a vaga</option>
-                      {VAGAS.map((v) => <option key={v}>{v}</option>)}
+                      <option data-testid="contato-option-26" disabled value="">{tr("Escolha a vaga")}</option>
+                      {VAGAS.map((v, localeIndex2) => <option data-testid={`contato-option-27-${localeIndex2}`} key={v} value={v}>{tr(v)}</option>)}
                     </select>
                   </label>
-                  <label className="file-field">
-                    <span>Anexar seu currículo *</span>
+                  <label data-testid="contato-label-28" className="file-field">
+                    <span data-testid="contato-span-29">{tr("Anexar seu currículo *")}</span>
                     <div className="file-input-wrap">
                       <input type="file" required onChange={onFile} accept=".pdf,.doc,.docx" data-testid="form-cv" />
-                      <span className="file-name">{fileName || "Nenhum arquivo selecionado"}</span>
+                      <span data-testid="contato-span-30" className="file-name">{tr(fileName || "Nenhum arquivo selecionado")}</span>
                     </div>
                   </label>
-                  <label>
-                    <span>Mensagem *</span>
+                  <label data-testid="contato-label-31">
+                    <span data-testid="contato-span-32">{tr("Mensagem *")}</span>
                     <textarea
                       name="mensagem"
                       rows={5}
                       required
-                      placeholder="Escrever alguma informação adicional ao currículo."
+                      placeholder={tr("Escrever alguma informação adicional ao currículo.")}
                       value={trabalheForm.mensagem}
                       onChange={change(setTrabalheForm)}
                       data-testid="form-mensagem"
@@ -269,32 +267,32 @@ ${ouvidoriaForm.mensagem}
 
               {tab === "ouvidoria" && (
                 <>
-                  <label>
-                    <span>Nome completo</span>
+                  <label data-testid="contato-label-33">
+                    <span data-testid="contato-span-34">{tr("Nome completo")}</span>
                     <input name="nome" type="text" value={ouvidoriaForm.nome} onChange={change(setOuvidoriaForm)} data-testid="form-nome" />
                   </label>
-                  <label>
-                    <span>E-mail</span>
+                  <label data-testid="contato-label-35">
+                    <span data-testid="contato-span-36">{tr("E-mail")}</span>
                     <input name="email" type="email" value={ouvidoriaForm.email} onChange={change(setOuvidoriaForm)} data-testid="form-email" />
                   </label>
-                  <label>
-                    <span>Telefone</span>
+                  <label data-testid="contato-label-37">
+                    <span data-testid="contato-span-38">{tr("Telefone")}</span>
                     <input name="telefone" type="tel" value={ouvidoriaForm.telefone} onChange={change(setOuvidoriaForm)} data-testid="form-telefone" />
                   </label>
-                  <label className="file-field">
-                    <span>Anexar arquivo</span>
+                  <label data-testid="contato-label-39" className="file-field">
+                    <span data-testid="contato-span-40">{tr("Anexar arquivo")}</span>
                     <div className="file-input-wrap">
                       <input type="file" onChange={onFile} data-testid="form-file" />
-                      <span className="file-name">{fileName || "Nenhum arquivo selecionado"}</span>
+                      <span data-testid="contato-span-41" className="file-name">{tr(fileName || "Nenhum arquivo selecionado")}</span>
                     </div>
                   </label>
-                  <label>
-                    <span>Mensagem *</span>
+                  <label data-testid="contato-label-42">
+                    <span data-testid="contato-span-43">{tr("Mensagem *")}</span>
                     <textarea
                       name="mensagem"
                       rows={5}
                       required
-                      placeholder="Escrever detalhes do que necessita, informações adicionais, etc."
+                      placeholder={tr("Escrever detalhes do que necessita, informações adicionais, etc.")}
                       value={ouvidoriaForm.mensagem}
                       onChange={change(setOuvidoriaForm)}
                       data-testid="form-mensagem"
@@ -304,7 +302,7 @@ ${ouvidoriaForm.mensagem}
               )}
 
               <div className="contact-recaptcha">
-                <label className="recaptcha-box">
+                <label data-testid="contato-label-44" className="recaptcha-box">
                   <input
                     type="checkbox"
                     checked={notRobot}
@@ -312,39 +310,36 @@ ${ouvidoriaForm.mensagem}
                     data-testid="form-notrobot"
                   />
                   <span className="recaptcha-check" aria-hidden />
-                  <span className="recaptcha-label">Não sou um robô</span>
+                  <span data-testid="contato-span-45" className="recaptcha-label">{tr("Não sou um robô")}</span>
                   <span className="recaptcha-logo" aria-hidden>
-                    <span className="rl-title">reCAPTCHA</span>
-                    <span className="rl-sub">Privacidade · Termos</span>
+                    <span data-testid="contato-span-46" className="rl-title">{tr("reCAPTCHA")}</span>
+                    <span data-testid="contato-span-47" className="rl-sub">{tr("Privacidade · Termos")}</span>
                   </span>
                 </label>
               </div>
 
-              <label className="contact-consent">
+              <label data-testid="contato-label-48" className="contact-consent">
                 <input
                   type="checkbox"
                   checked={aceite}
                   onChange={(e) => setAceite(e.target.checked)}
                   data-testid="form-consent"
                 />
-                <span>Li e concordo com a <a href="#" onClick={(e)=>e.preventDefault()}><strong>Política de Privacidade</strong></a>.</span>
+                <span data-testid="contato-span-49">{tr("Li e concordo com a ")}<a data-testid="contato-a-50" href="#" onClick={(e)=>e.preventDefault()}><strong>{tr("Política de Privacidade")}</strong></a>.</span>
               </label>
 
               <button
                 type="submit"
                 className="btn-big"
-                data-cursor="Enviar"
+                data-cursor={tr("Enviar")}
                 data-testid="form-submit"
                 disabled={!canSubmit}
                 style={!canSubmit ? { opacity: 0.55, cursor: "not-allowed" } : undefined}
               >
-                {sent ? "Abrindo seu cliente de e-mail…" : "Enviar"} <span aria-hidden>→</span>
+                {tr(sent ? "Abrindo seu cliente de e-mail…" : "Enviar")} <span aria-hidden>→</span>
               </button>
 
-              <p className="contact-privacy">
-                As informações enviadas serão usadas apenas para retorno do seu
-                contato e atendimento da sua solicitação.
-              </p>
+              <p data-testid="contato-p-51" className="contact-privacy">{tr("As informações enviadas serão usadas apenas para retorno do seu contato e atendimento da sua solicitação.")}</p>
             </form>
           </div>
         </div>
@@ -353,39 +348,37 @@ ${ouvidoriaForm.mensagem}
       {/* SEÇÃO 3 — INFORMAÇÕES DE CONTATO E ENDEREÇOS */}
       <section className="section section-atendimento matrizes-encaixe-hero-bg">
         <div className="shell">
-          <h2 className="h-section text-reveal" style={{ maxWidth: "22ch" }}>
-            {splitWords("Atendimento e unidades")}
+          <h2 data-testid="contato-h2-52" className="h-section text-reveal" style={{ maxWidth: "22ch" }}>
+            {splitWords(tr("Atendimento e unidades"))}
           </h2>
 
           <div className="atendimento-grid mt-xl">
             {/* Coluna 1 — Atendimento */}
             <div className="reveal">
-              <h3 className="how-col-title">Atendimento</h3>
+              <h3 data-testid="contato-h3-53" className="how-col-title">{tr("Atendimento")}</h3>
               <div className="contact-card" style={{ marginTop: "1.5rem" }}>
-                <span className="lbl">Telefone</span>
-                <a href="tel:+555135436151" data-cursor="Ligar">+55 (51) 3543.6151</a>
+                <span data-testid="contato-span-54" className="lbl">{tr("Telefone")}</span>
+                <a data-testid="contato-a-55" href="tel:+555135436151" data-cursor={tr("Ligar")}>+55 (51) 3543.6151</a>
               </div>
               <div className="contact-card">
-                <span className="lbl">E-mail</span>
-                <a href="mailto:contato@giinovacoes.com.br" data-cursor="Enviar">
-                  contato@giinovacoes.com.br
-                </a>
+                <span data-testid="contato-span-56" className="lbl">{tr("E-mail")}</span>
+                <a data-testid="contato-a-57" href="mailto:contato@giinovacoes.com.br" data-cursor={tr("Enviar")}>{tr("contato@giinovacoes.com.br")}</a>
               </div>
               <div className="contact-card">
-                <span className="lbl">Horário de atendimento</span>
-                <p>De segunda a sexta, das 7h30 às 17h30</p>
+                <span data-testid="contato-span-58" className="lbl">{tr("Horário de atendimento")}</span>
+                <p data-testid="contato-p-59">{tr("De segunda a sexta, das 7h30 às 17h30")}</p>
               </div>
             </div>
 
             {/* Coluna 2 — Endereços */}
             <div className="reveal">
-              <h3 className="how-col-title">Endereços</h3>
+              <h3 data-testid="contato-h3-60" className="how-col-title">{tr("Endereços")}</h3>
               <div className="contact-card" style={{ marginTop: "1.5rem" }}>
-                <span className="lbl">Unidade 1 - Matrizaria e solados</span>
-                <p>RS 239, 5075 - bairro Colina do Leão - Parobé - RS - Brasil</p>
+                <span data-testid="contato-span-61" className="lbl">{tr("Unidade 1 - Matrizaria e solados")}</span>
+                <p data-testid="contato-p-62">{tr("RS 239, 5075 - bairro Colina do Leão - Parobé - RS - Brasil")}</p>
                 <div className="map-embed">
-                  <iframe
-                    title="Mapa Unidade 1 — Gi Inovações"
+                  <iframe data-testid="contato-iframe-63"
+                    title={tr("Mapa Unidade 1 — Gi Inovações")}
                     src="https://www.google.com/maps?q=RS%20239%2C%205075%20-%20Colina%20do%20Le%C3%A3o%2C%20Parob%C3%A9%20-%20RS%2C%20Brasil&output=embed"
                     width="100%"
                     height="220"
@@ -394,23 +387,22 @@ ${ouvidoriaForm.mensagem}
                     style={{ border: 0, borderRadius: "12px", display: "block" }}
                     allowFullScreen
                   />
-                  <a
+                  <a data-testid="contato-a-64"
                     className="map-link"
                     href="https://www.google.com/maps/dir/?api=1&destination=RS%20239%2C%205075%20-%20Colina%20do%20Le%C3%A3o%2C%20Parob%C3%A9%20-%20RS%2C%20Brasil"
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cursor="Rotas"
-                  >
-                    Traçar rota até a Unidade 1 <span aria-hidden>→</span>
+                    data-cursor={tr("Rotas")}
+                  >{tr("Traçar rota até a Unidade 1 ")}<span aria-hidden>→</span>
                   </a>
                 </div>
               </div>
               <div className="contact-card">
-                <span className="lbl">Unidade 2 - Compostos e E-TPU</span>
-                <p>RS 239, 8080 - bairro Integração - Parobé - RS - Brasil</p>
+                <span data-testid="contato-span-65" className="lbl">{tr("Unidade 2 - Compostos e E-TPU")}</span>
+                <p data-testid="contato-p-66">{tr("RS 239, 8080 - bairro Integração - Parobé - RS - Brasil")}</p>
                 <div className="map-embed">
-                  <iframe
-                    title="Mapa Unidade 2 — Gi Inovações"
+                  <iframe data-testid="contato-iframe-67"
+                    title={tr("Mapa Unidade 2 — Gi Inovações")}
                     src="https://www.google.com/maps?q=RS%20239%2C%208080%20-%20Integra%C3%A7%C3%A3o%2C%20Parob%C3%A9%20-%20RS%2C%20Brasil&output=embed"
                     width="100%"
                     height="220"
@@ -419,14 +411,13 @@ ${ouvidoriaForm.mensagem}
                     style={{ border: 0, borderRadius: "12px", display: "block" }}
                     allowFullScreen
                   />
-                  <a
+                  <a data-testid="contato-a-68"
                     className="map-link"
                     href="https://www.google.com/maps/dir/?api=1&destination=RS%20239%2C%208080%20-%20Integra%C3%A7%C3%A3o%2C%20Parob%C3%A9%20-%20RS%2C%20Brasil"
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cursor="Rotas"
-                  >
-                    Traçar rota até a Unidade 2 <span aria-hidden>→</span>
+                    data-cursor={tr("Rotas")}
+                  >{tr("Traçar rota até a Unidade 2 ")}<span aria-hidden>→</span>
                   </a>
                 </div>
               </div>
@@ -438,13 +429,10 @@ ${ouvidoriaForm.mensagem}
       {/* SEÇÃO 4 — PERGUNTAS FREQUENTES (FAQ) */}
       <section className="section sec-cool">
         <div className="shell">
-          <h2 className="h-section text-reveal" style={{ maxWidth: "26ch" }}>
-            {splitWords("Perguntas frequentes")}
+          <h2 data-testid="contato-h2-69" className="h-section text-reveal" style={{ maxWidth: "26ch" }}>
+            {splitWords(tr("Perguntas frequentes"))}
           </h2>
-          <p className="body-lg reveal mt-lg" style={{ maxWidth: "68ch", color: "var(--cor-texto-muted)" }}>
-            Antes de enviar sua mensagem, veja se alguma das respostas abaixo
-            já ajuda no que você precisa.
-          </p>
+          <p data-testid="contato-p-70" className="body-lg reveal mt-lg" style={{ maxWidth: "68ch", color: "var(--cor-texto-muted)" }}>{tr("Antes de enviar sua mensagem, veja se alguma das respostas abaixo já ajuda no que você precisa.")}</p>
 
           <div className="accordion mt-xl">
             {FAQ.map((item, i) => (
@@ -453,18 +441,18 @@ ${ouvidoriaForm.mensagem}
                 key={item.q}
                 data-testid={`faq-${i}`}
               >
-                <button
+                <button data-testid={`contato-button-71-${i}`}
                   type="button"
                   className="acc-trigger"
                   onClick={() => setOpenIdx(openIdx === i ? -1 : i)}
                   aria-expanded={openIdx === i}
-                  data-cursor={openIdx === i ? "Fechar" : "Abrir"}
+                  data-cursor={tr(openIdx === i ? "Fechar" : "Abrir")}
                 >
-                  <span>{item.q}</span>
+                  <span data-testid={`contato-span-72-${i}`}>{tr(item.q)}</span>
                   <span className="plus" aria-hidden>+</span>
                 </button>
                 <div className="acc-content">
-                  <div className="acc-content-inner">{item.a}</div>
+                  <div className="acc-content-inner">{tr(item.a)}</div>
                 </div>
               </div>
             ))}

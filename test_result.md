@@ -457,3 +457,35 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Reference repository synchronized. Frontend dependencies installed, build passed, and Home screenshot is clean. Validate all listed flows against the reference behavior."
+
+## 2026-09-11 — Português (Brasil) / Español
+user_problem_statement: "agora quero que tenha a versao espanhol do site, e em algum lugar que fique bom no menu, a opcao de trocar para espanhol ou brasileiro, com bandeira"
+frontend:
+  - task: "Language selector and complete public static Spanish translations"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/i18n/LocaleProvider.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "React Context, pt-BR/es dictionaries, Radix flag selector in Nav, localStorage gi-locale persistence, html lang, metadata, translated static public pages, FAQ, forms, mailto/WhatsApp text, 3D controls and Spanish infographic. Build passes. Smoke screenshot shows Nuestra historia, Soluciones, ES flag and Contáctanos. Smoke strict inner_text assertion was case-sensitive against CSS uppercase; not a rendering failure. No backend/auth changes."
+test_plan:
+  current_focus:
+    - "PT default, ES switch, return PT, persistence across routes/reload, keyboard and outside click dismissal"
+    - "All public routes, headings/paragraphs, FAQ, subjects/job options, preserving filled forms on switch"
+    - "320/768/1024/1440 widths, no horizontal overflow/clipped translated words, immersive Home/Gi Reboot menu"
+    - "3D controls translate and still work; Spanish infographic and flags load"
+    - "Regression admin login, article CRUD and uploads; contact tabs and mailto composition (do not send external messages)"
+  test_all: true
+agent_communication:
+  - agent: "main"
+    message: "Use current external URL from frontend/.env. Existing backend uses fixed admin credentials; do not change auth. Static article teasers are original fallback content: Mongo currently empty, their detail routes show translated not-found as in original. Future administrator-authored article bodies remain in authored language (no automatic translation integration). Existing contact uses mailto, filename only/no automatic attachment; faux reCAPTCHA is only local checkbox and privacy link has no destination. These predate this task; document separately. Unique 3D data-testids now have React useId prefix, use suffix selectors. Other existing IDs preserved. Check JS textContent for case-sensitive comparisons (CSS uppercase). Do not edit app source; report all issues."
+
+## 2026-09-11 — Resultado e reteste
+- Relatório iteration_1.json: backend 9/9, idiomas/navegação/responsividade/formulários aprovados; três problemas anteriores identificados (GI014 ausente, defaultMuted, seletores admin).
+- Correções: GI014 também está ausente no GitHub original; marcado indisponível, sem requests inválidos e sem fingir que outro arquivo é GI014. Carrossel inicia GI015 e pula itens sem arquivo; os demais modelos continuam reais. `defaultMuted` movido para propriedade DOM; seletores administrativos adicionados sem alteração de auth.
+- Reteste via navegador externo: GI015/GI019/GI020 renderizam, next faz loop válido, cor/rotação traduzidas, indisponibilidade do GI014 visível em ES; nenhum request GI014 e nenhum erro JS. Empresa sem aviso defaultMuted. Admin login, formulário, preview, limpar e logout passam com novos seletores.
+- Build final passa. Traduções estáticas e seletor concluídos; revisão visual do usuário pendente. Arquivo GI014, editor bilíngue e integrações reais de contato continuam backlog explícito, não simulados como concluídos.

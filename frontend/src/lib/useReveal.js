@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLocale } from "../i18n/LocaleProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
  * fire reliably on initial load (Lenis + ScrollTrigger can race).
  */
 export function useReveal(dep) {
+  const { locale } = useLocale();
   useEffect(() => {
     let revertFns = [];
 
@@ -88,7 +90,7 @@ export function useReveal(dep) {
       ctx.revert();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dep]);
+  }, [dep, locale]);
 }
 
 /** Split text into per-word reveal markup. */

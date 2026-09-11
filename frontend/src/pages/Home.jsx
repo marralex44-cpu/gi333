@@ -1,3 +1,4 @@
+import { useLocale } from "../i18n/LocaleProvider";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
@@ -148,6 +149,7 @@ const ARTIGOS_FALLBACK = [
 ];
 
 export default function Home() {
+  const { tr } = useLocale();
   useReveal("home");
   const heroRef = useRef(null);
   const footprintRef = useRef(null);
@@ -501,12 +503,12 @@ export default function Home() {
       <section className="hero hero--video" ref={heroRef} data-cursor="">
         <div className="hero-stage">
           <div className="hero-bg">
-            <video
+            <video data-testid="home-video-1"
               className="hero-video"
               muted
               playsInline
               preload="auto"
-              aria-label="Gi Inovações — vídeo institucional"
+              aria-label={tr("Gi Inovações — vídeo institucional")}
             >
               {/* sources são definidas pelo useEffect conforme device (mobile vs desktop) */}
               <source data-role="webm" type="video/webm" />
@@ -526,43 +528,38 @@ export default function Home() {
           style={{ backgroundImage: "url(/assets/bg/eps-branco.jpeg)" }}
         />
         <div className="shell" style={{ position: "relative", zIndex: 2 }}>
-          <h2 className="h-section text-reveal">
-            {splitWords("Soluções técnicas da Gi")}
+          <h2 data-testid="home-h2-2" className="h-section text-reveal">
+            {splitWords(tr("Soluções técnicas da Gi"))}
           </h2>
-          <p
+          <p data-testid="home-p-3"
             className="body-lg reveal mt-lg"
             style={{ maxWidth: "72ch", color: "var(--cor-texto-muted)" }}
-          >
-            Desenvolvemos matrizes, solados em EVA, E-TPU (Gi Reboot®) e
-            compostos para projetos que exigem conforto, impacto controlado e
-            estabilidade de processo, em calçados e em componentes industriais
-            diversos.
-          </p>
+          >{tr("Desenvolvemos matrizes, solados em EVA, E-TPU (Gi Reboot®) e compostos para projetos que exigem conforto, impacto controlado e estabilidade de processo, em calçados e em componentes industriais diversos.")}</p>
 
           <div className="services-stack">
-            {SOLUCOES.map((s) => (
+            {SOLUCOES.map((s, localeIndex0) => (
               <Link
                 to={s.link}
                 className="svc-card reveal"
                 key={s.n}
                 id={`sol-${s.n}`}
-                data-cursor="Ver mais"
+                data-cursor={tr("Ver mais")}
                 data-testid={`svc-${s.n}`}
               >
-                <img
+                <img data-testid={`home-img-4-${localeIndex0}`}
                   className="svc-bg-img"
                   src={s.img}
-                  alt={s.t}
+                  alt={tr(s.t)}
                   loading="lazy"
                   decoding="async"
                 />
                 <div>
                   <div className="svc-head">
-                    <h3 className="svc-title">{s.t}</h3>
+                    <h3 data-testid={`home-h3-5-${localeIndex0}`} className="svc-title">{tr(s.t)}</h3>
                   </div>
-                  <p className="svc-body">{s.d}</p>
+                  <p data-testid={`home-p-6-${localeIndex0}`} className="svc-body">{tr(s.d)}</p>
                 </div>
-                <span className="svc-arrow">→</span>
+                <span data-testid={`home-span-7-${localeIndex0}`} className="svc-arrow">→</span>
               </Link>
             ))}
           </div>
@@ -577,8 +574,8 @@ export default function Home() {
       >
         <MouseTrail zoneRef={footprintRef} autoStart={true} />
         <div className="shell footprint-content">
-          <h2 className="footprint-title text-reveal">
-            {splitWords("Passos firmes e fortes.")}
+          <h2 data-testid="home-h2-8" className="footprint-title text-reveal">
+            {splitWords(tr("Passos firmes e fortes."))}
           </h2>
         </div>
       </section>
@@ -587,14 +584,10 @@ export default function Home() {
       <section className="section section-sustain-marquee" id="sustentabilidade">
         <div className="shell shell-narrow">
           <div className="sustain-marquee-header">
-            <h2 className="h-section text-reveal sustain-marquee-title">
-              {splitWords("Sustentabilidade na prática")}
+            <h2 data-testid="home-h2-9" className="h-section text-reveal sustain-marquee-title">
+              {splitWords(tr("Sustentabilidade na prática"))}
             </h2>
-            <p className="body-lg reveal sustain-marquee-lead">
-              Cinco frentes que rodam dentro da operação da Gi — da
-              matéria-prima ao produto final — combinando responsabilidade
-              ambiental com engenharia industrial.
-            </p>
+            <p data-testid="home-p-10" className="body-lg reveal sustain-marquee-lead">{tr("Cinco frentes que rodam dentro da operação da Gi — da matéria-prima ao produto final — combinando responsabilidade ambiental com engenharia industrial.")}</p>
           </div>
         </div>
 
@@ -610,50 +603,44 @@ export default function Home() {
           style={{ backgroundImage: "url(/assets/bg/eps-bolinhas.jpeg)" }}
         />
         <div className="shell" style={{ position: "relative", zIndex: 2 }}>
-          <h2 className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
-            {splitWords("Conteúdos técnicos para P&D em matrizes, EVA e E-TPU")}
+          <h2 data-testid="home-h2-11" className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
+            {splitWords(tr("Conteúdos técnicos para P&D em matrizes, EVA e E-TPU"))}
           </h2>
-          <p
+          <p data-testid="home-p-12"
             className="body-lg reveal mt-lg"
             style={{ maxWidth: "72ch", color: "var(--cor-texto-muted)" }}
-          >
-            Artigos, cases e materiais técnicos produzidos pelo time da Gi
-            sobre desenvolvimento de matrizes, solados em EVA, E-TPU (Gi
-            Reboot®) e compostos, para apoiar P<span className="amp">&amp;</span>D e desenvolvimento de
-            produto em calçados e outras aplicações industriais.
-          </p>
+          >{tr("Artigos, cases e materiais técnicos produzidos pelo time da Gi sobre desenvolvimento de matrizes, solados em EVA, E-TPU (Gi Reboot®) e compostos, para apoiar P")}<span data-testid="home-span-13" className="amp">{tr("&")}</span>{tr("D e desenvolvimento de produto em calçados e outras aplicações industriais.")}</p>
 
           <div className="blog-grid mt-xl">
             {artigos.map((a, i) => (
-              <Link
+              <Link data-testid={`home-link-14-${i}`}
                 to={`/artigos/${a.slug}`}
                 className={`blog-card artigo-card-appear${a.cover_image ? " blog-card--with-media" : ""}`}
                 style={{ animationDelay: `${i * 80}ms` }}
                 key={a.slug || a.title}
-                data-cursor="Ler artigo"
+                data-cursor={tr("Ler artigo")}
               >
                 {a.cover_image ? (
                   <div className="blog-card-media">
-                    <img
+                    <img data-testid={`home-img-15-${i}`}
                       src={resolveMediaUrl(a.cover_image)}
-                      alt={a.title}
+                      alt={tr(a.title)}
                       loading="lazy"
                     />
                   </div>
                 ) : null}
                 <div className="blog-card-body">
-                  <span className="blog-card-index">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="blog-card-title">{a.title}</h3>
-                  <p className="blog-card-excerpt">{a.excerpt}</p>
-                  <span className="link-arrow">Ler artigo <span className="arrow">→</span></span>
+                  <span data-testid={`home-span-16-${i}`} className="blog-card-index">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 data-testid={`home-h3-17-${i}`} className="blog-card-title">{tr(a.title)}</h3>
+                  <p data-testid={`home-p-18-${i}`} className="blog-card-excerpt">{tr(a.excerpt)}</p>
+                  <span data-testid={`home-span-19-${i}`} className="link-arrow">{tr("Ler artigo ")}<span data-testid={`home-span-20-${i}`} className="arrow">→</span></span>
                 </div>
               </Link>
             ))}
           </div>
 
           <div className="reveal mt-xl">
-            <Link to="/artigos" className="link-arrow" data-cursor="Ver">
-              Ver todos os artigos <span className="arrow">→</span>
+            <Link data-testid="home-link-21" to="/artigos" className="link-arrow" data-cursor={tr("Ver")}>{tr("Ver todos os artigos ")}<span data-testid="home-span-22" className="arrow">→</span>
             </Link>
           </div>
         </div>
@@ -663,33 +650,25 @@ export default function Home() {
       <section className="final-cta section">
         <div className="shell final-cta-inner">
           <div className="cta-waves" aria-hidden="true">
-            <span className="cta-bubble cta-bubble--1" />
-            <span className="cta-bubble cta-bubble--2" />
-            <span className="cta-bubble cta-bubble--3" />
+            <span data-testid="home-span-23" className="cta-bubble cta-bubble--1" />
+            <span data-testid="home-span-24" className="cta-bubble cta-bubble--2" />
+            <span data-testid="home-span-25" className="cta-bubble cta-bubble--3" />
           </div>
 
-          <h2 className="h-section text-reveal" style={{ maxWidth: "22ch" }}>
-            {splitWords("Falar com a Gi Inovações")}
+          <h2 data-testid="home-h2-26" className="h-section text-reveal" style={{ maxWidth: "22ch" }}>
+            {splitWords(tr("Falar com a Gi Inovações"))}
           </h2>
-          <p className="body-lg reveal" style={{ textAlign: "center", maxWidth: "70ch" }}>
-            Se você está desenvolvendo uma nova linha de calçados ou avaliando
-            o uso de EVA, E-TPU (Gi Reboot®) e compostos em outros componentes
-            industriais, nossa equipe técnica pode apoiar na definição de
-            matrizes, materiais e soluções de solado.
-          </p>
+          <p data-testid="home-p-27" className="body-lg reveal" style={{ textAlign: "center", maxWidth: "70ch" }}>{tr("Se você está desenvolvendo uma nova linha de calçados ou avaliando o uso de EVA, E-TPU (Gi Reboot®) e compostos em outros componentes industriais, nossa equipe técnica pode apoiar na definição de matrizes, materiais e soluções de solado.")}</p>
           <div className="reveal">
             <Link
               to="/contato"
               className="btn-big"
-              data-cursor="Conversar"
+              data-cursor={tr("Conversar")}
               data-testid="final-cta"
-            >
-              Contato técnico <span aria-hidden>→</span>
+            >{tr("Contato técnico ")}<span aria-hidden>→</span>
             </Link>
           </div>
-          <p className="body-md reveal" style={{ marginTop: "1.4rem", color: "var(--cor-texto-muted)", textAlign: "center" }}>
-            Prefere falar direto com o time?<br />
-            E-mail: <a href="mailto:contato@giinovacoes.com.br">contato@giinovacoes.com.br</a> · Telefone: <a href="tel:+555135436151">+55 (51) 3543.6151</a>
+          <p data-testid="home-p-28" className="body-md reveal" style={{ marginTop: "1.4rem", color: "var(--cor-texto-muted)", textAlign: "center" }}>{tr("Prefere falar direto com o time?")}<br />{tr("E-mail: ")}<a data-testid="home-a-29" href="mailto:contato@giinovacoes.com.br">{tr("contato@giinovacoes.com.br")}</a>{tr(" · Telefone: ")}<a data-testid="home-a-30" href="tel:+555135436151">+55 (51) 3543.6151</a>
           </p>
         </div>
       </section>

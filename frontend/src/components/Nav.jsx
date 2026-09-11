@@ -1,5 +1,7 @@
+import { useLocale } from "../i18n/LocaleProvider";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const SOLUCOES_LINKS = [
   { label: "Solados em EVA",        to: "/eva#solados-em-eva" },
@@ -10,6 +12,7 @@ const SOLUCOES_LINKS = [
 ];
 
 export default function Nav() {
+  const { tr } = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [solucoesOpen, setSolucoesOpen] = useState(false);
@@ -73,19 +76,19 @@ export default function Nav() {
   return (
     <>
       <header
-        className={`gi-nav ${scrolled ? "scrolled" : ""}`}
+        className={`gi-nav ${scrolled ? "scrolled" : ""} ${mobileOpen ? "gi-nav--menu-open" : ""}`}
         data-testid="gi-nav"
       >
         <Link
           to="/"
           className="gi-logo"
-          data-cursor="Início"
+          data-cursor={tr("Início")}
           data-testid="nav-logo"
         >
-          <span className="gi-logo-stack">
-            <img
+          <span data-testid="nav-span-1" className="gi-logo-stack">
+            <img data-testid="nav-img-2"
               src="/brand/logo-mark.png"
-              alt="Gi Inovações"
+              alt={tr("Gi Inovações")}
               className="gi-logo-mark gi-logo-mark--default"
             />
             <img
@@ -99,8 +102,8 @@ export default function Nav() {
 
         <nav>
           <ul className="gi-nav-links">
-            <li><NavLink to="/empresa" data-testid="nav-empresa">Empresa</NavLink></li>
-            <li><NavLink to="/gi-reboot" data-testid="nav-reboot">Gi Reboot<sup>®</sup></NavLink></li>
+            <li><NavLink to="/empresa" data-testid="nav-empresa">{tr("Empresa")}</NavLink></li>
+            <li><NavLink to="/gi-reboot" data-testid="nav-reboot">{tr("Gi Reboot")}<sup>®</sup></NavLink></li>
             <li
               className={`has-dropdown ${solucoesOpen ? "open" : ""}`}
               ref={solucoesRef}
@@ -118,9 +121,7 @@ export default function Nav() {
                   navigate("/eva");
                 }}
                 data-testid="nav-solucoes-trigger"
-              >
-                Soluções
-                <svg
+              >{tr("Soluções")}<svg
                   className="caret"
                   width="10"
                   height="10"
@@ -130,7 +131,7 @@ export default function Nav() {
                   <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
-              <div
+              <div data-testid="nav-div-3"
                 className="nav-dropdown"
                 role="menu"
                 aria-hidden={!solucoesOpen}
@@ -145,8 +146,8 @@ export default function Nav() {
                         onClick={() => setSolucoesOpen(false)}
                         data-testid={`nav-solucao-${i + 1}`}
                       >
-                        <span className="num">0{i + 1}</span>
-                        <span>{item.label}</span>
+                        <span data-testid={`nav-span-4-${i}`} className="num">0{i + 1}</span>
+                        <span data-testid={`nav-span-5-${i}`}>{tr(item.label)}</span>
                       </Link>
                     </li>
                   ))}
@@ -157,17 +158,16 @@ export default function Nav() {
         </nav>
 
         <div className="gi-nav-right">
-          <Link to="/contato" className="btn-outline btn-outline-compact" data-testid="nav-cta">
-            Fale conosco
-          </Link>
+          <LanguageSwitcher />
+          <Link to="/contato" className="btn-outline btn-outline-compact" data-testid="nav-cta">{tr("Fale conosco")}</Link>
           <button
             className={`hamburger ${mobileOpen ? "open" : ""}`}
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"}
+            aria-label={tr(mobileOpen ? "Fechar menu" : "Abrir menu")}
             aria-expanded={mobileOpen}
             data-testid="hamburger"
           >
-            <span /><span /><span />
+            <span data-testid="nav-span-6" /><span data-testid="nav-span-7" /><span data-testid="nav-span-8" />
           </button>
         </div>
       </header>
@@ -178,35 +178,32 @@ export default function Nav() {
         aria-hidden={!mobileOpen}
       >
         <div className="mobile-menu-inner">
-          <span className="mobile-menu-label">Menu · Gi Inovações</span>
+          <span data-testid="nav-span-9" className="mobile-menu-label">{tr("Menu · Gi Inovações")}</span>
           <nav>
-            <NavLink to="/" end onClick={() => setMobileOpen(false)}>
-              <span className="num">01</span> Home
+            <NavLink data-testid="nav-navlink-10" to="/" end onClick={() => setMobileOpen(false)}>
+              <span data-testid="nav-span-11" className="num">01</span>{tr(" Home")}</NavLink>
+            <NavLink data-testid="nav-navlink-12" to="/empresa" onClick={() => setMobileOpen(false)}>
+              <span data-testid="nav-span-13" className="num">02</span>{tr(" Empresa")}</NavLink>
+            <NavLink data-testid="nav-navlink-14" to="/gi-reboot" onClick={() => setMobileOpen(false)}>
+              <span data-testid="nav-span-15" className="num">03</span>{tr(" Gi Reboot")}<sup>®</sup>
             </NavLink>
-            <NavLink to="/empresa" onClick={() => setMobileOpen(false)}>
-              <span className="num">02</span> Empresa
-            </NavLink>
-            <NavLink to="/gi-reboot" onClick={() => setMobileOpen(false)}>
-              <span className="num">03</span> Gi Reboot<sup>®</sup>
-            </NavLink>
-            <span className="mobile-section-label">Soluções</span>
-            {SOLUCOES_LINKS.map((item) => (
-              <Link
+            <span data-testid="nav-span-16" className="mobile-section-label">{tr("Soluções")}</span>
+            {SOLUCOES_LINKS.map((item, localeIndex0) => (
+              <Link data-testid={`nav-link-17-${localeIndex0}`}
                 key={item.label}
                 to={item.to}
                 className="mobile-sub"
                 onClick={() => setMobileOpen(false)}
               >
-                {item.label}
+                {tr(item.label)}
               </Link>
             ))}
           </nav>
-          <Link
+          <Link data-testid="nav-link-18"
             to="/contato"
             className="btn-big mobile-menu-cta"
             onClick={() => setMobileOpen(false)}
-          >
-            Fale com a Gi <span aria-hidden>→</span>
+          >{tr("Fale com a Gi ")}<span aria-hidden>→</span>
           </Link>
         </div>
       </div>

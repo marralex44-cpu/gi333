@@ -1,3 +1,4 @@
+import { useLocale } from "../i18n/LocaleProvider";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import Viewer3DCarousel from "../components/Viewer3DCarousel";
@@ -29,6 +30,7 @@ const COMBINAR = [
 ];
 
 export default function GiReboot() {
+  const { tr, locale } = useLocale();
   useReveal("gi-reboot");
   const heroRef = useRef(null);
 
@@ -60,7 +62,7 @@ export default function GiReboot() {
       {/* SEÇÃO 1 — HERO / INTRODUÇÃO */}
       <section className="reboot-hero reboot-hero--runner" ref={heroRef}>
         <div className="reboot-hero-media" aria-hidden="true">
-          <video
+          <video data-testid="gi-reboot-video-1"
             className="reboot-hero-video"
             src="/assets/gi-reboot/hero-video.mp4"
             poster="/assets/gi-reboot/hero-runner.jpeg"
@@ -75,9 +77,9 @@ export default function GiReboot() {
 
         <div className="shell reboot-hero-grid">
           <div>
-            <img
+            <img data-testid="gi-reboot-img-2"
               src="/assets/gi-reboot/logo-gi-reboot.png"
-              alt="Gi Reboot®"
+              alt={tr("Gi Reboot®")}
               className="reboot-hero-logo reveal"
             />
           </div>
@@ -98,20 +100,17 @@ export default function GiReboot() {
         />
         <div className="section-video-overlay" aria-hidden="true" />
         <div className="shell" style={{ position: "relative", zIndex: 2 }}>
-          <h2 className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
-            {splitWords("Onde o Gi Reboot® faz mais diferença")}
+          <h2 data-testid="gi-reboot-h2-3" className="h-section text-reveal" style={{ maxWidth: "32ch" }}>
+            {splitWords(tr("Onde o Gi Reboot® faz mais diferença"))}
           </h2>
-          <p className="body-lg reveal mt-lg" style={{ maxWidth: "70ch", color: "var(--cor-texto-muted)" }}>
-            Para projetos em que conforto percebido, retorno de energia e
-            durabilidade são decisivos.
-          </p>
+          <p data-testid="gi-reboot-p-4" className="body-lg reveal mt-lg" style={{ maxWidth: "70ch", color: "var(--cor-texto-muted)" }}>{tr("Para projetos em que conforto percebido, retorno de energia e durabilidade são decisivos.")}</p>
 
           <div className="stacked-panels mt-xl">
             <div className="panel panel--full panel--split reveal" data-testid="panel-calcados">
               <div className="panel-content">
-                <h4>Em calçados</h4>
+                <h4 data-testid="gi-reboot-h4-5">{tr("Em calçados")}</h4>
                 <ul>
-                  {CALCADOS.map((c, i) => <li key={i}>{c}</li>)}
+                  {CALCADOS.map((c, i) => <li key={i}>{tr(c)}</li>)}
                 </ul>
               </div>
               <div className="panel-video-wrap">
@@ -128,16 +127,16 @@ export default function GiReboot() {
               </div>
             </div>
             <div className="panel panel--full panel--industrial reveal" data-testid="panel-outros-componentes">
-              <h4>Em outros componentes</h4>
+              <h4 data-testid="gi-reboot-h4-6">{tr("Em outros componentes")}</h4>
               <div className="industrial-grid">
                 {INDUSTRIAL_IMGS.map((it, i) => (
                   <figure key={i} className="industrial-card">
                     <div className="industrial-card-media">
-                      <img src={it.img} alt={it.label} loading="lazy" />
+                      <img data-testid={`gi-reboot-img-7-${i}`} src={it.img} alt={tr(it.label)} loading="lazy" />
                     </div>
                     <figcaption>
-                      <span className="industrial-card-tag">{it.label}</span>
-                      <p>{it.text}</p>
+                      <span data-testid={`gi-reboot-span-8-${i}`} className="industrial-card-tag">{tr(it.label)}</span>
+                      <p data-testid={`gi-reboot-p-9-${i}`}>{tr(it.text)}</p>
                     </figcaption>
                   </figure>
                 ))}
@@ -152,14 +151,14 @@ export default function GiReboot() {
         <div className="reboot-solados-bg" aria-hidden="true" />
         <div className="shell" style={{ position: "relative", zIndex: 2 }}>
           <div className="prod-wide-canvas">
-            <h2 className="h-section text-reveal prod-wide-title reboot-solados-title">
-              {splitWords("Solados em E-TPU Gi Reboot®")}
+            <h2 data-testid="gi-reboot-h2-10" className="h-section text-reveal prod-wide-title reboot-solados-title">
+              {splitWords(tr("Solados em E-TPU Gi Reboot®"))}
             </h2>
             <div className="reveal prod-wide-3d reboot-hero-viewer reboot-hero-viewer--dark" data-testid="gi-reboot-3d-carousel">
               <Viewer3DCarousel
                 showCatalogLink={false}
                 items={[
-                  { url: "/assets/3d/GI014.glb", label: "GI014" },
+                  { url: null, label: "GI014" },
                   { url: "/assets/3d/GI015.glb", label: "GI015" },
                   { url: "/assets/3d/GI019.glb", label: "GI019" },
                   { url: "/assets/3d/GI020.glb", label: "GI020" },
@@ -168,21 +167,11 @@ export default function GiReboot() {
             </div>
             <div className="prod-wide-cols">
               <div className="prod-wide-col">
-                <p className="body-lg reveal">
-                  O Gi Reboot® é o E-TPU da Gi: solados e componentes com alto
-                  retorno de energia, estabilidade dimensional e comportamento
-                  consistente em produção.
-                </p>
-                <a href="/contato" className="viewer-catalog-link prod-wide-catalog reveal" data-cursor="Ver catálogo">
-                  Ver nosso catálogo completo
-                </a>
+                <p data-testid="gi-reboot-p-11" className="body-lg reveal">{tr("O Gi Reboot® é o E-TPU da Gi: solados e componentes com alto retorno de energia, estabilidade dimensional e comportamento consistente em produção.")}</p>
+                <a data-testid="gi-reboot-a-12" href="/contato" className="viewer-catalog-link prod-wide-catalog reveal" data-cursor={tr("Ver catálogo")}>{tr("Ver nosso catálogo completo")}</a>
               </div>
               <div className="prod-wide-col">
-                <p className="body-lg reveal">
-                  Indicado para linhas que exigem durabilidade, resiliência e
-                  conforto em diferentes condições de uso, atendendo marcas que
-                  querem elevar o nível de desempenho dos seus produtos.
-                </p>
+                <p data-testid="gi-reboot-p-13" className="body-lg reveal">{tr("Indicado para linhas que exigem durabilidade, resiliência e conforto em diferentes condições de uso, atendendo marcas que querem elevar o nível de desempenho dos seus produtos.")}</p>
               </div>
             </div>
           </div>
@@ -194,8 +183,8 @@ export default function GiReboot() {
         <div className="shell">
           <figure className="versatilidade-figure reveal">
             <img
-              src="/versatilidade.jpg"
-              alt="Versatilidade que impulsiona inovação — 8 aplicações do Gi Reboot® eTPU"
+              src={locale === "es" ? "/versatilidade-es.jpg" : "/versatilidade.jpg"}
+              alt={tr("Versatilidade que impulsiona inovação — 8 aplicações do Gi Reboot® eTPU")}
               className="versatilidade-img"
               loading="lazy"
               data-testid="versatilidade-img"
@@ -208,28 +197,24 @@ export default function GiReboot() {
       <section className="section reboot-together-section">
         <div className="reboot-together-bg" aria-hidden="true">
           <div className="meteor-layer">
-            <span className="meteor meteor--1" />
-            <span className="meteor meteor--2" />
-            <span className="meteor meteor--3" />
-            <span className="meteor meteor--4" />
-            <span className="meteor meteor--5" />
-            <span className="meteor meteor--6" />
-            <span className="meteor meteor--7" />
-            <span className="meteor meteor--8" />
+            <span data-testid="gi-reboot-span-14" className="meteor meteor--1" />
+            <span data-testid="gi-reboot-span-15" className="meteor meteor--2" />
+            <span data-testid="gi-reboot-span-16" className="meteor meteor--3" />
+            <span data-testid="gi-reboot-span-17" className="meteor meteor--4" />
+            <span data-testid="gi-reboot-span-18" className="meteor meteor--5" />
+            <span data-testid="gi-reboot-span-19" className="meteor meteor--6" />
+            <span data-testid="gi-reboot-span-20" className="meteor meteor--7" />
+            <span data-testid="gi-reboot-span-21" className="meteor meteor--8" />
           </div>
         </div>
         <div className="shell" style={{ position: "relative", zIndex: 2 }}>
-          <h2 className="h-section text-reveal reboot-together-title" style={{ maxWidth: "26ch" }}>
-            {splitWords("Gi Reboot® e EVA trabalhando juntos")}
+          <h2 data-testid="gi-reboot-h2-22" className="h-section text-reveal reboot-together-title" style={{ maxWidth: "26ch" }}>
+            {splitWords(tr("Gi Reboot® e EVA trabalhando juntos"))}
           </h2>
-          <p className="body-lg reveal mt-lg reboot-together-lead" style={{ maxWidth: "76ch" }}>
-            Em muitos projetos, o Gi Reboot® é aplicado em conjunto com o EVA:
-            o EVA segue como base versátil e competitiva; o E-TPU entra em
-            pontos estratégicos para elevar conforto e performance.
-          </p>
+          <p data-testid="gi-reboot-p-23" className="body-lg reveal mt-lg reboot-together-lead" style={{ maxWidth: "76ch" }}>{tr("Em muitos projetos, o Gi Reboot® é aplicado em conjunto com o EVA: o EVA segue como base versátil e competitiva; o E-TPU entra em pontos estratégicos para elevar conforto e performance.")}</p>
 
           <ul className="manifesto-list reveal mt-xl reboot-together-list" style={{ maxWidth: "78ch" }}>
-            {COMBINAR.map((c, i) => <li key={i}>{c}</li>)}
+            {COMBINAR.map((c, i) => <li key={i}>{tr(c)}</li>)}
           </ul>
         </div>
       </section>
@@ -237,22 +222,15 @@ export default function GiReboot() {
       {/* SEÇÃO 5 — CHAMADA ESTRATÉGICA */}
       <section className="final-cta section">
         <div className="shell final-cta-inner">
-          <h2 className="h-section text-reveal" style={{ maxWidth: "34ch" }}>
-            {splitWords("Quer avaliar Gi Reboot® no seu próximo projeto?")}
+          <h2 data-testid="gi-reboot-h2-24" className="h-section text-reveal" style={{ maxWidth: "34ch" }}>
+            {splitWords(tr("Quer avaliar Gi Reboot® no seu próximo projeto?"))}
           </h2>
-          <p className="body-lg reveal" style={{ textAlign: "center", maxWidth: "72ch" }}>
-            Nossa equipe técnica pode apoiar na definição de aplicação, desenho
-            de peça e requisitos de processo para solados em E-TPU e outros
-            componentes.
-          </p>
+          <p data-testid="gi-reboot-p-25" className="body-lg reveal" style={{ textAlign: "center", maxWidth: "72ch" }}>{tr("Nossa equipe técnica pode apoiar na definição de aplicação, desenho de peça e requisitos de processo para solados em E-TPU e outros componentes.")}</p>
           <div className="reveal">
-            <Link to="/contato" className="btn-big" data-cursor="Conversar">
-              Falar com a equipe técnica <span aria-hidden>→</span>
+            <Link data-testid="gi-reboot-link-26" to="/contato" className="btn-big" data-cursor={tr("Conversar")}>{tr("Falar com a equipe técnica ")}<span aria-hidden>→</span>
             </Link>
           </div>
-          <p className="body-md reveal" style={{ marginTop: "1.4rem", color: "var(--cor-texto-muted)", textAlign: "center" }}>
-            Prefere falar direto com o time?<br />
-            E-mail: <a href="mailto:contato@giinovacoes.com.br">contato@giinovacoes.com.br</a> · Telefone: <a href="tel:+555135436151">+55 (51) 3543.6151</a>
+          <p data-testid="gi-reboot-p-27" className="body-md reveal" style={{ marginTop: "1.4rem", color: "var(--cor-texto-muted)", textAlign: "center" }}>{tr("Prefere falar direto com o time?")}<br />{tr("E-mail: ")}<a data-testid="gi-reboot-a-28" href="mailto:contato@giinovacoes.com.br">{tr("contato@giinovacoes.com.br")}</a>{tr(" · Telefone: ")}<a data-testid="gi-reboot-a-29" href="tel:+555135436151">+55 (51) 3543.6151</a>
           </p>
         </div>
       </section>

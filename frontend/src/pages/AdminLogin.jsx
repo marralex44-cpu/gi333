@@ -26,20 +26,21 @@ export default function AdminLogin() {
   };
 
   return (
-    <main className="page page-admin-login">
+    <main className="page page-admin-login" lang="pt-BR" data-testid="admin-login-page">
       <section className="section">
         <div className="shell shell-narrow">
           <div className="admin-login-card">
             <span className="eyebrow">Área restrita</span>
-            <h1 className="h-section" style={{ maxWidth: "22ch" }}>Acesso ao painel de artigos</h1>
+            <h1 className="h-section" style={{ maxWidth: "22ch" }} data-testid="admin-login-title">Acesso ao painel de artigos</h1>
             <p className="body-md" style={{ color: "var(--cor-texto-muted)" }}>
               Entre com suas credenciais para gerenciar os conteúdos técnicos.
             </p>
-            <form onSubmit={onSubmit} className="admin-login-form" autoComplete="off">
+            <form onSubmit={onSubmit} className="admin-login-form" autoComplete="off" data-testid="admin-login-form">
               <label className="admin-field">
                 <span>Login</span>
                 <input
                   type="text"
+                  data-testid="admin-login-username"
                   value={login}
                   onChange={(e) => setLogin(e.target.value)}
                   required
@@ -50,13 +51,14 @@ export default function AdminLogin() {
                 <span>Senha</span>
                 <input
                   type="password"
+                  data-testid="admin-login-password"
                   value={senha}
                   onChange={(e) => setSenha(e.target.value)}
                   required
                 />
               </label>
-              {err ? <div className="admin-error">{err}</div> : null}
-              <button type="submit" className="btn-big" disabled={loading} data-cursor="Entrar">
+              {err ? <div className="admin-error" role="alert" data-testid="admin-login-error">{err}</div> : null}
+              <button type="submit" className="btn-big" disabled={loading} data-cursor="Entrar" data-testid="admin-login-submit">
                 {loading ? "Entrando…" : "Entrar"} <span aria-hidden>→</span>
               </button>
             </form>
